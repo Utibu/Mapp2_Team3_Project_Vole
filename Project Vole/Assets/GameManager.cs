@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
 
 	public GameObject world;
 	public float worldMoveSpeed = 1f;
+	public float chunkWidth = 20f;
 
 	void Awake() {
 		Application.targetFrameRate = 60;
@@ -22,5 +23,10 @@ public class GameManager : MonoBehaviour {
 
 	void Update() {
 		world.transform.position += Vector3.left * worldMoveSpeed * Time.deltaTime;
+		if (world.transform.position.x + (chunkWidth / 2) < 0f) {
+			//float lastPositionX = world.transform.position.x + (chunkWidth / 2);
+			//world.transform.position = new Vector3 ((chunkWidth / 2), world.transform.position.y);
+		}
+
 	}
 }
