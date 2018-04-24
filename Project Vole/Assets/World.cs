@@ -4,10 +4,11 @@ using UnityEngine;
 using System.Linq;
 
 public class World : MonoBehaviour {
-
-	public Queue<GameObject> chunks = new Queue<GameObject>();
-	public List<GameObject> chunkList = new List<GameObject> ();
+	
+	public List<GameObject> chunkContent = new List<GameObject> ();
 	public float chunkSize = 10f;
+
+	private List<GameObject> chunkList = new List<GameObject> ();	
 	private int chunksToCoverScreen = 0;
 
 	// Use this for initialization
@@ -18,27 +19,27 @@ public class World : MonoBehaviour {
 		List<GameObject> sortedChunkList = tempChunks.OrderBy(c=>c.transform.position.x).ToList();
 		chunkList = sortedChunkList;
 
-		foreach(GameObject g in sortedChunkList) {
-			chunks.Enqueue (g);
-		}
-
-
 		chunksToCoverScreen = Mathf.CeilToInt(CameraManager.instance.GetCameraSize ().x / chunkSize) + 1;
 		Debug.Log (chunksToCoverScreen);
+	}
+
+	private GameObject RequestContent() {
+		if (chunkList.Count <= 0)
+			return null;
+		
+		int randomIndex = Random.Range (0, chunkContent.Count);
+		return chunkContent [randomIndex];
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		//GameObject firstChunk = chunks.Peek ();
 		GameObject firstChunk = chunkList [0];
-		Debug.Log (firstChunk.name);
 		if (firstChunk.transform.position.x + (chunkSize / 2) < -(CameraManager.instance.GetCameraSize ().x / 2)) {
-			//GameObject c = chunks.Dequeue ();
 			GameObject c = chunkList [0];
 			chunkList.RemoveAt (0);
 			c.transform.position = new Vector3 (chunkList[chunkList.Count - 1].transform.position.x + chunkSize, c.transform.position.y);
+			c.GetComponent<Chunk> ().SetContent (RequestContent ());
 			chunkList.Add (c);
-			chunks.Enqueue (c);
 		}
 			
 	}
