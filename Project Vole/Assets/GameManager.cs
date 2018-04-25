@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -9,6 +10,9 @@ public class GameManager : MonoBehaviour {
 	public GameObject world;
 	public float worldMoveSpeed = 1f;
 	public float chunkWidth = 20f;
+	public Text currencyText;
+
+	private int currency = 0;
 
 	bool x = true;
 
@@ -46,5 +50,10 @@ public class GameManager : MonoBehaviour {
 	void FixedUpdate() {
 		//world.GetComponent<World> ().MoveWorld ();
 
+	}
+
+	public void AddCurrency(int increment) {
+		currency += increment;
+		currencyText.text = "Worms: " + currency;
 	}
 }
