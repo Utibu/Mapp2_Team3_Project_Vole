@@ -15,12 +15,13 @@ public class CameraManager : MonoBehaviour {
 		else if(instance != this)
 			Destroy(gameObject);
 
-	}
-
-	void Start() {
 		float height = 2f * Camera.main.orthographicSize;
 		float width = height * Camera.main.aspect;
 		cameraSize = new Vector2 (width, height);
+
+	}
+
+	void Start() {
 	}
 
 	public Vector2 GetCameraSize() {

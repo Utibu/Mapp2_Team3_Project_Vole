@@ -7,20 +7,30 @@ public class World : MonoBehaviour {
 	
 	public List<GameObject> chunkContent = new List<GameObject> ();
 	public float chunkSize = 10f;
+	public GameObject chunkPrefab;
 
 	private List<GameObject> chunkList = new List<GameObject> ();	
 	private int chunksToCoverScreen = 0;
 
 	// Use this for initialization
 	void Start () {
-		GameObject[] chunckObjects = GameObject.FindGameObjectsWithTag ("Chunk");
+		/*GameObject[] chunckObjects = GameObject.FindGameObjectsWithTag ("Chunk");
 		List<GameObject> tempChunks = new List<GameObject> (chunckObjects);
 
 		List<GameObject> sortedChunkList = tempChunks.OrderBy(c=>c.transform.position.x).ToList();
-		chunkList = sortedChunkList;
+		chunkList = sortedChunkList;*/
 
 		chunksToCoverScreen = Mathf.CeilToInt(CameraManager.instance.GetCameraSize ().x / chunkSize) + 1;
+		Debug.Log (CameraManager.instance.GetCameraSize ().x + "    " + chunkSize);
 		Debug.Log (chunksToCoverScreen);
+
+		for(int i = 0; i < chunksToCoverScreen; i++) {
+			GameObject g = (GameObject)Instantiate (chunkPrefab, transform);
+			g.GetComponent<Chunk> ().SetSize (chunkSize);
+			g.transform.position = new Vector3 (-(CameraManager.instance.GetCameraSize ().x / 2) + (chunkSize * i), g.transform.position.y);
+			chunkList.Add (g);
+		}
+
 	}
 
 	private GameObject RequestContent() {
@@ -42,5 +52,17 @@ public class World : MonoBehaviour {
 			chunkList.Add (c);
 		}
 			
+	}
+
+	public void MoveWorld() {
+		foreach(GameObject g in chunkList) {
+			/*Rigidbody2D rb2d = g.GetComponent<Rigidbody2D> ();
+			g.GetComponent<Rigidbody2D>().MovePosition (rb2d.position + (Vector2.left * GameManager.instance.worldMoveSpeed * Time.deltaTime));
+			*/
+			g.transform.position += Vector3.left * GameManager.instance.worldMoveSpeed * Time.deltaTime;
+		}
+	}
+
+	void FixedUpdate() {
 	}
 }

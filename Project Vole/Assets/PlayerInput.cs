@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour {
 
-    public float up = -0.1f;
+    public float force = 0f;
 
 
     private bool downMovement;
@@ -19,14 +19,19 @@ public class PlayerInput : MonoBehaviour {
 
 
 	// Update is called once per frame
-	void Update () {
-        if (Input.GetKey(KeyCode.Space)) {
 
-        }
-        else
-        {
-            rgdbd2d.velocity += new Vector2(0, up);
-        }
+	void FixedUpdate() {
+		if (Input.GetKey(KeyCode.Space)) {
+			rgdbd2d.velocity += new Vector2(0, force);
+		}
+		else
+		{
+
+		}
+	}
+
+	void Update () {
+        
         
 
 

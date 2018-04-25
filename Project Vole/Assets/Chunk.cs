@@ -5,6 +5,8 @@ using UnityEngine;
 public class Chunk : MonoBehaviour {
 
 	public GameObject contentHolder;
+	public GameObject grass;
+	public GameObject ground;
 
 	// Use this for initialization
 	void Start () {
@@ -14,6 +16,11 @@ public class Chunk : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
+	}
+
+	public void SetSize(float width) {
+		grass.transform.localScale = new Vector2 (width, grass.transform.localScale.y);
+		ground.transform.localScale = new Vector2 (width, ground.transform.localScale.y);
 	}
 
 	public void SetContent(GameObject g) {
