@@ -22,7 +22,12 @@ public class PlayerInput : MonoBehaviour {
 
 	void FixedUpdate() {
 		if (Input.GetKey(KeyCode.Space)) {
-			rgdbd2d.velocity += new Vector2(0, force);
+			//rgdbd2d.velocity += new Vector2(0, force);
+			rgdbd2d.velocity = Vector3.zero;
+			rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y + force));
+			//rgdbd2d.velocity += new Vector2 (0, force);
+			//rgdbd2d.AddForce (new Vector2 (0, force));
+			//rgdbd2d.AddRelativeForce (new Vector2 (0, force));
 		}
 		else
 		{

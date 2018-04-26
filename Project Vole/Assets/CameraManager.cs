@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraManager : MonoBehaviour {
 
 	public static CameraManager instance = null;
+	private Camera cam;
 
 	private Vector2 cameraSize = Vector2.zero;
 

@@ -25,10 +25,22 @@ public class Chunk : MonoBehaviour {
 
 	public void SetContent(GameObject g) {
 		//g.transform.SetParent (transform);
+		//return;
+		ShowContentHolder ();
 		foreach (Transform child in contentHolder.transform) {
 			GameObject.Destroy(child.gameObject);
 		}
 
-		Instantiate (g, contentHolder.transform);
+		GameObject newGameObject = Instantiate (g, contentHolder.transform);
+		newGameObject.SetActive (true);
+		//Debug.Log (newGameObject.name);
+	}
+
+	public void HideContentHolder() {
+		contentHolder.SetActive (false);
+	}
+
+	public void ShowContentHolder() {
+		contentHolder.SetActive (true);
 	}
 }

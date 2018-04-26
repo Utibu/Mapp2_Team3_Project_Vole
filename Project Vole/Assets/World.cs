@@ -20,14 +20,14 @@ public class World : MonoBehaviour {
 		List<GameObject> sortedChunkList = tempChunks.OrderBy(c=>c.transform.position.x).ToList();
 		chunkList = sortedChunkList;*/
 
-		chunksToCoverScreen = Mathf.CeilToInt(CameraManager.instance.GetCameraSize ().x / chunkSize) + 1;
+		chunksToCoverScreen = Mathf.CeilToInt(CameraManager.instance.GetCameraSize ().x / chunkSize) + 2;
 		Debug.Log (CameraManager.instance.GetCameraSize ().x + "    " + chunkSize);
 		Debug.Log (chunksToCoverScreen);
 
 		for(int i = 0; i < chunksToCoverScreen; i++) {
 			GameObject g = (GameObject)Instantiate (chunkPrefab, transform);
 			g.GetComponent<Chunk> ().SetSize (chunkSize);
-			g.transform.position = new Vector3 (-(CameraManager.instance.GetCameraSize ().x / 2) + (chunkSize * i), g.transform.position.y);
+			g.transform.position = new Vector3 (-(CameraManager.instance.GetCameraSize ().x / 2) - 1f + (chunkSize * i), g.transform.position.y);
 			chunkList.Add (g);
 		}
 
@@ -44,10 +44,11 @@ public class World : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		GameObject firstChunk = chunkList [0];
-		if (firstChunk.transform.position.x + (chunkSize / 2) < -(CameraManager.instance.GetCameraSize ().x / 2)) {
+		if (firstChunk.transform.position.x + (chunkSize / 2) < -(CameraManager.instance.GetCameraSize ().x / 2) - 1f) {
 			GameObject c = chunkList [0];
 			chunkList.RemoveAt (0);
 			c.transform.position = new Vector3 (chunkList[chunkList.Count - 1].transform.position.x + chunkSize, c.transform.position.y);
+			c.SetActive (true);
 			c.GetComponent<Chunk> ().SetContent (RequestContent ());
 			chunkList.Add (c);
 		}
@@ -60,6 +61,12 @@ public class World : MonoBehaviour {
 			g.GetComponent<Rigidbody2D>().MovePosition (rb2d.position + (Vector2.left * GameManager.instance.worldMoveSpeed * Time.deltaTime));
 			*/
 			g.transform.position += Vector3.left * GameManager.instance.worldMoveSpeed * Time.deltaTime;
+		}
+	}
+
+	public void HideAllObjects() {
+		foreach(GameObject g in chunkList) {
+			g.GetComponent<Chunk> ().HideContentHolder ();
 		}
 	}
 
