@@ -483,6 +483,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1548147053392680, guid: 7ad42a34591d6674f871cb7a041a5849, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7ad42a34591d6674f871cb7a041a5849, type: 2}
   m_IsPrefabParent: 0
@@ -598,6 +602,11 @@ MonoBehaviour:
   - {fileID: 1688113308893520, guid: 2bb5374427280437faea11feccdfeb4f, type: 2}
   - {fileID: 1102176727054880, guid: 699433ff5b6f740c6ba762f541421d6c, type: 2}
   - {fileID: 1279538050494980, guid: af6bf8b476d6f4887a040a6d4e33584d, type: 2}
+  - {fileID: 1548147053392680, guid: 7ad42a34591d6674f871cb7a041a5849, type: 2}
+  - {fileID: 1819328129399354, guid: 9d071fd9a4984b14ca9aac1f5270c287, type: 2}
+  - {fileID: 1488802626141734, guid: 4237776305c91564db992ca5723962f8, type: 2}
+  - {fileID: 1955442387402834, guid: 4bb1d586534beb548bd675459b93575c, type: 2}
+  - {fileID: 1981065835589318, guid: 335b0bd9b8e75f943af085493d98e4b5, type: 2}
   chunkSize: 10
   chunkPrefab: {fileID: 1419818583959806, guid: 6d0c393f489d94ff7b6c283198c0e2b3,
     type: 2}
