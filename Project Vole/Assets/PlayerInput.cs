@@ -57,7 +57,7 @@ public class PlayerInput : MonoBehaviour {
 	void FixedUpdate() {
 
 		//Rotation
-		float xSpeed = GameManager.instance.currentWorldXMovementNoDelta;
+		float xSpeed = GameManager.instance.worldMoveSpeed;
 
 
 

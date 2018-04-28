@@ -788,7 +788,6 @@ MonoBehaviour:
   chunkSize: 10
   chunkPrefab: {fileID: 1419818583959806, guid: 6d0c393f489d94ff7b6c283198c0e2b3,
     type: 2}
-  trail: {fileID: 68913493}
 --- !u!1001 &1248207414
 Prefab:
   m_ObjectHideFlags: 0
