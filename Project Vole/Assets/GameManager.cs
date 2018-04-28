@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour {
 
 		if (Input.GetKeyUp (KeyCode.B)) {
 			x = x ? false : true;
-			Debug.Log ("ÄNDRAT!!! x = " + x);
+			Debug.Log ("ÄNDRAT!!! x = " + x); 
 		}
 
 

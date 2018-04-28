@@ -7,7 +7,7 @@ public class CameraManager : MonoBehaviour {
 	public static CameraManager instance = null;
 	private Camera cam;
 
-	private Vector2 cameraSize = Vector2.zero;
+	private Vector2 cameraSize = Vector2.zero; 
 
 	void Awake() {
 		//Singleton-pattern to allow other scripts to access this game manager by name

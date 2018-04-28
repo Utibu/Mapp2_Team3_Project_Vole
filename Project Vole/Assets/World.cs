@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class World : MonoBehaviour {
+public class World : MonoBehaviour { 
 	
 	public List<GameObject> chunkContent = new List<GameObject> ();
 	public float chunkSize = 10f;
@@ -49,7 +49,7 @@ public class World : MonoBehaviour {
 			chunkList.RemoveAt (0);
 			c.transform.position = new Vector3 (chunkList[chunkList.Count - 1].transform.position.x + chunkSize, c.transform.position.y);
 			c.SetActive (true);
-			c.GetComponent<Chunk> ().SetContent (RequestContent ());
+			c.GetComponent<Chunk> ().SetContent (RequestContent ()); 
 			chunkList.Add (c);
 		}
 			
