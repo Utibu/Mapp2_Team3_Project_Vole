@@ -49,6 +49,7 @@ public class PlayerInput : MonoBehaviour {
 	// Update is called once per frame
 
 	void NewTrail(LineRenderer lr) {
+		//return;
 		lr.positionCount += 1;
 		lr.SetPosition (lr.positionCount - 1, lr.GetPosition (lr.positionCount - 2));
 		hasGeneratedTrailRecently = true;
@@ -72,7 +73,7 @@ public class PlayerInput : MonoBehaviour {
 			} else {
 				float rad = Mathf.Atan2 (speedDownMovement, xSpeed * Time.deltaTime);
 				float deg = Mathf.Rad2Deg * rad - 90;
-				transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, -deg));
+				transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, deg));
 			}
 		}
 		else
@@ -83,7 +84,7 @@ public class PlayerInput : MonoBehaviour {
 			} else {
 				float rad = Mathf.Atan2 (speedUpMovement, xSpeed * Time.deltaTime);
 				float deg = Mathf.Rad2Deg * rad - 90;
-				transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, deg));
+				transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, -deg));
 			}
 		}
 		distance = GetComponent<Collider2D> ().bounds.extents.y;
@@ -115,7 +116,6 @@ public class PlayerInput : MonoBehaviour {
 		else
 		{
 			if(isTouchingTop()) {
-				transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, 0f));
 				//New trail
 				if(!hasGeneratedTrailRecently) {
 					NewTrail (lr);	

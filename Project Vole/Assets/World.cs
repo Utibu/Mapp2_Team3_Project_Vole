@@ -12,6 +12,8 @@ public class World : MonoBehaviour {
 	private List<GameObject> chunkList = new List<GameObject> ();	
 	private int chunksToCoverScreen = 0;
 
+	public LineRenderer trail;
+
 	// Use this for initialization
 	void Start () {
 		/*GameObject[] chunckObjects = GameObject.FindGameObjectsWithTag ("Chunk");
@@ -55,13 +57,21 @@ public class World : MonoBehaviour {
 			
 	}
 
-	public void MoveWorld() {
+	public void MoveWorld(float worldMoveSpeed) {
+		transform.position += Vector3.left * worldMoveSpeed * Time.deltaTime;
 		foreach(GameObject g in chunkList) {
 			/*Rigidbody2D rb2d = g.GetComponent<Rigidbody2D> ();
 			g.GetComponent<Rigidbody2D>().MovePosition (rb2d.position + (Vector2.left * GameManager.instance.worldMoveSpeed * Time.deltaTime));
 			*/
-			g.transform.position += Vector3.left * GameManager.instance.worldMoveSpeed * Time.deltaTime;
+			//g.transform.position += Vector3.left * GameManager.instance.worldMoveSpeed * Time.deltaTime;
 		}
+
+		Vector3[] positions = new Vector3[trail.positionCount];
+		trail.GetPositions (positions);
+		for(int i = 0; i < positions.Length; i++) {
+			positions [i] = new Vector3 (positions [i].x - worldMoveSpeed * Time.deltaTime, positions [i].y, positions [i].z);
+		}
+		trail.SetPositions (positions);
 	}
 
 	public void HideAllObjects() {

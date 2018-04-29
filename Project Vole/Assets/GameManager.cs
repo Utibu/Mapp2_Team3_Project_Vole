@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour {
 
 	private int currency = 0;
 
-	bool x = true;
+	bool x = false;
 
 	void Awake() {
 		Application.targetFrameRate = 60;
@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour {
 		if(x) {
 			world.transform.position += Vector3.left * worldMoveSpeed * Time.deltaTime;
 		} else {
-			world.GetComponent<World> ().MoveWorld ();
+			world.GetComponent<World> ().MoveWorld (worldMoveSpeed);
 		}
 	}
 
