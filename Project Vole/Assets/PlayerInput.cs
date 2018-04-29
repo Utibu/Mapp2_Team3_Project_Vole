@@ -50,8 +50,10 @@ public class PlayerInput : MonoBehaviour {
 
 	void NewTrail(LineRenderer lr) {
 		//return;
-		lr.positionCount += 1;
-		lr.SetPosition (lr.positionCount - 1, lr.GetPosition (lr.positionCount - 2));
+		lr.positionCount += 2;
+		//To create a new anchor
+		lr.SetPosition (lr.positionCount - 2, lr.GetPosition (lr.positionCount - 3));
+		lr.SetPosition (lr.positionCount - 1, lr.GetPosition (lr.positionCount - 3));
 		hasGeneratedTrailRecently = true;
 	}
 
@@ -74,6 +76,7 @@ public class PlayerInput : MonoBehaviour {
 				float rad = Mathf.Atan2 (speedDownMovement, xSpeed * Time.deltaTime);
 				float deg = Mathf.Rad2Deg * rad - 90;
 				transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, deg));
+				Debug.Log ("DOWN: " + deg + " spd " + speedUpMovement + " h " + xSpeed * Time.deltaTime + " --- " + Mathf.Rad2Deg * rad);
 			}
 		}
 		else
@@ -83,8 +86,9 @@ public class PlayerInput : MonoBehaviour {
 				transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, 0f));
 			} else {
 				float rad = Mathf.Atan2 (speedUpMovement, xSpeed * Time.deltaTime);
-				float deg = Mathf.Rad2Deg * rad - 90;
-				transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, -deg));
+				float deg = Mathf.Rad2Deg * rad;
+				transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, deg));
+				Debug.Log ("UP: " + deg + " spd " + speedUpMovement + " h " + xSpeed * Time.deltaTime + " --- " + Mathf.Rad2Deg * rad);
 			}
 		}
 		distance = GetComponent<Collider2D> ().bounds.extents.y;
