@@ -14,11 +14,14 @@ public class PlayerInput : MonoBehaviour {
 
     private bool downMovement;
     private Rigidbody2D rgdbd2d;
+	private float lastTrailSpawn;
+	private bool trailIsBig = false;
 
     // Use this for initialization
     void Start(){
 		distance = GetComponent<Collider2D> ().bounds.extents.y;
 		rgdbd2d = transform.parent.GetComponent<Rigidbody2D>();
+		lastTrailSpawn = Time.time;
 
     }
 
@@ -49,12 +52,21 @@ public class PlayerInput : MonoBehaviour {
 	// Update is called once per frame
 
 	void NewTrail(LineRenderer lr) {
+
+		if(Time.time < lastTrailSpawn + 0.5f) {
+			lr.endWidth = 2f;
+			lastTrailSpawn = Time.time;
+			trailIsBig = true;
+			return;
+		}
+
 		//return;
 		lr.positionCount += 2;
 		//To create a new anchor
 		lr.SetPosition (lr.positionCount - 2, lr.GetPosition (lr.positionCount - 3));
 		lr.SetPosition (lr.positionCount - 1, lr.GetPosition (lr.positionCount - 3));
 		hasGeneratedTrailRecently = true;
+		lastTrailSpawn = Time.time;
 	}
 
 	void FixedUpdate() {
@@ -127,7 +139,20 @@ public class PlayerInput : MonoBehaviour {
 			}
 		}
 
+		if(Time.time > lastTrailSpawn + 0.5f && trailIsBig) {
+			lr.endWidth = 1f;
+			NewTrail (lr);
+			trailIsBig = false;
+
+		} else {
+			//lr.SetPosition (lr.positionCount - 1, new Vector3(transform.position.x, lr.GetPosition(lr.positionCount - 1).y, transform.position.z));
+		}
+
 		lr.SetPosition (lr.positionCount - 1, transform.position);
+
+		if(trailIsBig) {
+			lr.SetPosition (lr.positionCount - 1, new Vector3(transform.position.x, lr.GetPosition(lr.positionCount - 1).y, transform.position.z));
+		}
 
 
      
