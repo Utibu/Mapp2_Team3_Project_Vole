@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
 	public float chunkWidth = 20f;
 	public Text currencyText;
 
-	private int currency = 0;
+	public int currency { get; protected set; }
 
 	bool x = false;
 
@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour {
 			instance = this;
 		else if(instance != this)
 			Destroy(gameObject);
+
+		currency = 0;
 		
 	}
 

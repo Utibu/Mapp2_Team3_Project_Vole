@@ -25,7 +25,7 @@ public class Chunk : MonoBehaviour {
 
 	public void SetContent(GameObject g) {
 		//g.transform.SetParent (transform);
-		return;
+		//return;
 		ShowContentHolder ();
 		foreach (Transform child in contentHolder.transform) {
 			GameObject.Destroy(child.gameObject);

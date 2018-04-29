@@ -7,6 +7,7 @@ public class PlayerInput : MonoBehaviour {
     public float speedDownMovement = 0f;
 	public float speedUpMovement = 0f;
 	public GameObject trail;
+	public Player player;
 
 	private float distance;
 	private float distanceToBottom;
@@ -54,17 +55,17 @@ public class PlayerInput : MonoBehaviour {
 	void NewTrail(LineRenderer lr) {
 
 		if(Time.time < lastTrailSpawn + 0.5f) {
-			lr.endWidth = 2f;
+			lr.endWidth = 1.2f;
 			lastTrailSpawn = Time.time;
 			trailIsBig = true;
 			return;
 		}
 
 		//return;
-		lr.positionCount += 2;
+		lr.positionCount += 1;
 		//To create a new anchor
-		lr.SetPosition (lr.positionCount - 2, lr.GetPosition (lr.positionCount - 3));
-		lr.SetPosition (lr.positionCount - 1, lr.GetPosition (lr.positionCount - 3));
+		//lr.SetPosition (lr.positionCount - 2, lr.GetPosition (lr.positionCount - 3));
+		lr.SetPosition (lr.positionCount - 1, transform.position);
 		hasGeneratedTrailRecently = true;
 		lastTrailSpawn = Time.time;
 	}
@@ -88,7 +89,7 @@ public class PlayerInput : MonoBehaviour {
 				float rad = Mathf.Atan2 (speedDownMovement, xSpeed * Time.deltaTime);
 				float deg = Mathf.Rad2Deg * rad - 90;
 				transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, deg));
-				Debug.Log ("DOWN: " + deg + " spd " + speedUpMovement + " h " + xSpeed * Time.deltaTime + " --- " + Mathf.Rad2Deg * rad);
+				//Debug.Log ("DOWN: " + deg + " spd " + speedUpMovement + " h " + xSpeed * Time.deltaTime + " --- " + Mathf.Rad2Deg * rad);
 			}
 		}
 		else
@@ -100,7 +101,7 @@ public class PlayerInput : MonoBehaviour {
 				float rad = Mathf.Atan2 (speedUpMovement, xSpeed * Time.deltaTime);
 				float deg = Mathf.Rad2Deg * rad;
 				transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, deg));
-				Debug.Log ("UP: " + deg + " spd " + speedUpMovement + " h " + xSpeed * Time.deltaTime + " --- " + Mathf.Rad2Deg * rad);
+				//Debug.Log ("UP: " + deg + " spd " + speedUpMovement + " h " + xSpeed * Time.deltaTime + " --- " + Mathf.Rad2Deg * rad);
 			}
 		}
 		distance = GetComponent<Collider2D> ().bounds.extents.y;
@@ -151,9 +152,15 @@ public class PlayerInput : MonoBehaviour {
 		lr.SetPosition (lr.positionCount - 1, transform.position);
 
 		if(trailIsBig) {
-			lr.SetPosition (lr.positionCount - 1, new Vector3(transform.position.x, lr.GetPosition(lr.positionCount - 1).y, transform.position.z));
+			//lr.SetPosition (lr.positionCount - 1, new Vector3(transform.position.x, lr.GetPosition(lr.positionCount - 1).y, transform.position.z));
+			transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, 0f));
 		}
 
+
+
+		if(Input.GetKeyDown(KeyCode.Return)) {
+			player.ShootWorm ();
+		}
 
      
     }
