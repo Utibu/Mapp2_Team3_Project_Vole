@@ -6,8 +6,9 @@ public class Player : MonoBehaviour {
 
 	public GameObject wormBulletPrefab;
 	public Transform playerTransform;
+    public SetActive setActive;
 
-	public int wormCost;
+    public int wormCost;
 	public bool wormIsFree;
 
 	// Use this for initialization
@@ -22,7 +23,8 @@ public class Player : MonoBehaviour {
 
 	public void Die() {
 		gameObject.SetActive (false);
-	}
+        setActive.Active();
+    }
 
 	public void ShootWorm() {
 		if (GameManager.instance.currency >= wormCost || wormIsFree) {
