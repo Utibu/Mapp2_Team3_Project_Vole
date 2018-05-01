@@ -22,6 +22,7 @@ public class Player : MonoBehaviour {
 	}
 
 	public void Die() {
+		GameManager.instance.SetHighscore ();
 		gameObject.SetActive (false);
         setActive.Active();
     }

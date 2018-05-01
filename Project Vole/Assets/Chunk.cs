@@ -19,6 +19,7 @@ public class Chunk : MonoBehaviour {
 	}
 
 	public void SetSize(float width) {
+		return;
 		grass.transform.localScale = new Vector2 (width, grass.transform.localScale.y);
 		ground.transform.localScale = new Vector2 (width, ground.transform.localScale.y);
 	}

@@ -18,11 +18,15 @@ public class PlayerInput : MonoBehaviour {
 	private float lastTrailSpawn;
 	private bool trailIsBig = false;
 
+	private float lastPress;
+	private bool fastPress = false;
+
     // Use this for initialization
     void Start(){
 		distance = GetComponent<Collider2D> ().bounds.extents.y;
 		rgdbd2d = transform.parent.GetComponent<Rigidbody2D>();
 		lastTrailSpawn = Time.time;
+		lastPress = Time.time - 1f;
 
     }
 
@@ -53,7 +57,7 @@ public class PlayerInput : MonoBehaviour {
 	// Update is called once per frame
 
 	void NewTrail(LineRenderer lr) {
-
+		return;
 		if(Time.time < lastTrailSpawn + 0.5f) {
 			lr.endWidth = 1.2f;
 			lastTrailSpawn = Time.time;
@@ -61,7 +65,7 @@ public class PlayerInput : MonoBehaviour {
 			return;
 		}
 
-		//return;
+		return;
 		lr.positionCount += 1;
 		//To create a new anchor
 		//lr.SetPosition (lr.positionCount - 2, lr.GetPosition (lr.positionCount - 3));
@@ -75,10 +79,9 @@ public class PlayerInput : MonoBehaviour {
 		//Rotation
 		float xSpeed = GameManager.instance.worldMoveSpeed;
 
+		//Debug.Log (Input.touchCount);
 
-
-
-		if (Input.GetKey(KeyCode.Space)) {
+		if (Input.GetKey (KeyCode.Space)||(Input.touchCount > 0 && (Input.GetTouch (0).phase == TouchPhase.Stationary || Input.GetTouch (0).phase == TouchPhase.Moved)) || (Input.mousePresent && Input.GetMouseButton(0))) {
 			rgdbd2d.velocity = Vector3.zero;
 			rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y - speedDownMovement));
 
@@ -105,6 +108,45 @@ public class PlayerInput : MonoBehaviour {
 			}
 		}
 		distance = GetComponent<Collider2D> ().bounds.extents.y;
+
+		/*if((Input.touchCount > 0 && (Input.GetTouch (0).phase == TouchPhase.Ended)) || (Input.mousePresent && Input.GetMouseButtonUp(0))) {
+			lastPress = Time.time;
+		} else {
+			
+		}
+		if ((Input.touchCount > 0 && (Input.GetTouch (0).phase == TouchPhase.Began)) || (Input.mousePresent && Input.GetMouseButtonDown(0))) {
+			if(Time.time < lastPress + 0.5f) {
+				transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, 0f));
+			} else {
+
+			}
+		}*/
+
+		if(Input.GetKeyDown(KeyCode.Space)) {
+			if(Time.time < lastPress + 0.5f) {
+				fastPress = true;
+			}
+		}
+
+		if(Input.GetKeyUp(KeyCode.Space)) {
+			lastPress = Time.time;
+		}
+
+
+		if(fastPress) {
+			transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, 0f));
+		} 
+
+		if(Time.time > lastPress + 0.5f) {
+			fastPress = false;
+		}
+
+
+
+
+
+
+
 
 
 	}
@@ -153,8 +195,10 @@ public class PlayerInput : MonoBehaviour {
 
 		if(trailIsBig) {
 			//lr.SetPosition (lr.positionCount - 1, new Vector3(transform.position.x, lr.GetPosition(lr.positionCount - 1).y, transform.position.z));
-			transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, 0f));
+			//transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, 0f));
 		}
+
+
 
 
 

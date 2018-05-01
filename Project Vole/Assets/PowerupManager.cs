@@ -1,10 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PowerupManager : MonoBehaviour {
 
+	[Serializable]
+	public struct PowerupSprite {
+		public string name;
+		public Sprite sprite;
+	}
+
 	public static PowerupManager instance;
+	public PowerupSprite[] spritesArray;
+	public Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
+	public int chanceToHavePowerup;
 
 	void Awake() {
 		//Singleton-pattern to allow other scripts to access this game manager by name
@@ -16,7 +26,9 @@ public class PowerupManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		foreach(PowerupSprite p in spritesArray) {
+			sprites.Add (p.name, p.sprite);
+		}
 	}
 	
 	// Update is called once per frame

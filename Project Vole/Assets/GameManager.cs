@@ -11,9 +11,15 @@ public class GameManager : MonoBehaviour {
 	public GameObject world;
 	public float worldMoveSpeed = 1f;
 	public float chunkWidth = 20f;
+	public int scorePerSecond;
+	public int score;
 	public Text currencyText;
+	public Text scoreText;
+	private int highscore;
+	public Text highscoreText;
 
 	public int currency { get; protected set; }
+	public int multiplier;
 
 	bool x = false;
 
@@ -30,6 +36,11 @@ public class GameManager : MonoBehaviour {
 		
 	}
 
+	void Start() {
+		InvokeRepeating ("AddScore", 1, 1);
+		highscore = PlayerPrefs.GetInt ("highscore");
+	}
+
 	void Update() {
 		/*world.transform.position += Vector3.left * worldMoveSpeed * Time.deltaTime;
 		if (world.transform.position.x + (chunkWidth / 2) < 0f) {
@@ -41,6 +52,9 @@ public class GameManager : MonoBehaviour {
 			x = x ? false : true;
 			Debug.Log ("ÄNDRAT!!! x = " + x); 
 		}
+
+		scoreText.text = "Score: " + score;
+		highscoreText.text = "Highscore: " + highscore;
 
 
 		if(x) {
@@ -58,5 +72,18 @@ public class GameManager : MonoBehaviour {
 	public void AddCurrency(int increment) {
 		currency += increment;
 		currencyText.text = "Worms: " + currency;
+	}
+
+	void AddScore() {
+		score += scorePerSecond;
+	}
+
+	public void SetHighscore() {
+		int s = score * ((int)currency / multiplier);
+		if(s > PlayerPrefs.GetInt("highscore")) {
+			
+		}
+		PlayerPrefs.SetInt ("highscore", s);
+		highscore = s;
 	}
 }
