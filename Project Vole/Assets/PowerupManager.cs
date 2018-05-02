@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class PowerupManager : MonoBehaviour {
 
@@ -16,6 +17,9 @@ public class PowerupManager : MonoBehaviour {
 	public Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
 	public int chanceToHavePowerup;
 
+	public Player player;
+	public Button triggerButton;
+
 	void Awake() {
 		//Singleton-pattern to allow other scripts to access this game manager by name
 		if(instance == null)
@@ -29,26 +33,46 @@ public class PowerupManager : MonoBehaviour {
 		foreach(PowerupSprite p in spritesArray) {
 			sprites.Add (p.name, p.sprite);
 		}
+
+		triggerButton.gameObject.SetActive(false);
+		triggerButton.onClick.RemoveAllListeners();
+		triggerButton.interactable = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if(Input.GetKeyUp(KeyCode.S)) {
-			Shake (10);
+			Shake (10, player);
+			
 		}
 	}
 
-	public void TriggerPowerup(string name) {
+	public void TriggerPowerupGUI(string name) {
+		triggerButton.gameObject.SetActive(false);
 		switch(name) {
 		case "shake":
-			Shake (10);
+			Shake (10, player);
+			triggerButton.onClick.RemoveAllListeners();
+			triggerButton.interactable = false;
 			break;
 		default:
 			break;
 		}
 	}
 
-	public void Shake(int times) {
-		GetComponent<Shake> ().StartShake (times);
+	public void TriggerPowerup(string name, Player player) {
+		triggerButton.gameObject.SetActive(true);
+		switch(name) {
+		case "shake":
+			triggerButton.onClick.AddListener(() => TriggerPowerupGUI("shake"));
+			triggerButton.interactable = true;
+			break;
+		default:
+			break;
+		}
+	}
+
+	public void Shake(int times, Player player) {
+		GetComponent<Shake> ().StartShake (times, player);
 	}
 }

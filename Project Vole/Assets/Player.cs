@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
 
@@ -11,6 +12,10 @@ public class Player : MonoBehaviour {
     public int wormCost;
 	public bool wormIsFree;
 
+	public bool isInvisible;
+
+	public Button wormButton;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -18,18 +23,24 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (GameManager.instance.currency >= wormCost || wormIsFree) {
+			wormButton.interactable = true;
+		} else {
+			wormButton.interactable = false;
+		}
 	}
 
 	public void Die() {
 		GameManager.instance.SetHighscore ();
+		setActive.Activate();
+		GameManager.instance.gameOver = true;
 		gameObject.SetActive (false);
-        setActive.Active();
     }
 
 	public void ShootWorm() {
 		if (GameManager.instance.currency >= wormCost || wormIsFree) {
 			Instantiate (wormBulletPrefab, playerTransform.position, Quaternion.identity);
+			GameManager.instance.RemoveCurrency(wormCost);
 		}
 
 	}

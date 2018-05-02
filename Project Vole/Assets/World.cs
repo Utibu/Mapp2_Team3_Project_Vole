@@ -74,9 +74,9 @@ public class World : MonoBehaviour {
 		trail.SetPositions (positions);
 	}
 
-	public void HideAllObjects() {
+	public void HideAllObjects(string byTag = "") {
 		foreach(GameObject g in chunkList) {
-			g.GetComponent<Chunk> ().HideContentHolder ();
+			g.GetComponent<Chunk> ().HideContentHolder (byTag);
 		}
 	}
 

@@ -20,6 +20,7 @@ public class PlayerInput : MonoBehaviour {
 
 	private float lastPress;
 	private bool fastPress = false;
+	public float fastPressLimitInSeconds;
 
     // Use this for initialization
     void Start(){
@@ -122,13 +123,13 @@ public class PlayerInput : MonoBehaviour {
 			}
 		}*/
 
-		if(Input.GetKeyDown(KeyCode.Space)) {
-			if(Time.time < lastPress + 0.5f) {
+		if(Input.GetKeyDown(KeyCode.Space) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)) {
+			if(Time.time < lastPress + fastPressLimitInSeconds) {
 				fastPress = true;
 			}
 		}
 
-		if(Input.GetKeyUp(KeyCode.Space)) {
+		if(Input.GetKeyUp(KeyCode.Space) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)) {
 			lastPress = Time.time;
 		}
 
@@ -137,7 +138,7 @@ public class PlayerInput : MonoBehaviour {
 			transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, 0f));
 		} 
 
-		if(Time.time > lastPress + 0.5f) {
+		if(Time.time > lastPress + fastPressLimitInSeconds) {
 			fastPress = false;
 		}
 

@@ -15,11 +15,13 @@ public class GameManager : MonoBehaviour {
 	public int score;
 	public Text currencyText;
 	public Text scoreText;
-	private int highscore;
+	public int highscore;
 	public Text highscoreText;
 
 	public int currency { get; protected set; }
 	public int multiplier;
+	public int totalScore;
+	public bool gameOver = false;
 
 	bool x = false;
 
@@ -39,6 +41,7 @@ public class GameManager : MonoBehaviour {
 	void Start() {
 		InvokeRepeating ("AddScore", 1, 1);
 		highscore = PlayerPrefs.GetInt ("highscore");
+		Debug.Log(highscore);
 	}
 
 	void Update() {
@@ -53,10 +56,13 @@ public class GameManager : MonoBehaviour {
 			Debug.Log ("ÄNDRAT!!! x = " + x); 
 		}
 
-		scoreText.text = "Score: " + score;
-		highscoreText.text = "Highscore: " + highscore;
-
-
+		if(!gameOver) {
+			scoreText.text = "Score: " + score;
+			highscoreText.text = "Highscore: " + highscore;
+			//Debug.Log(highscore);
+			currencyText.text = "Worms: " + currency;
+		}
+		
 		if(x) {
 			world.transform.position += Vector3.left * worldMoveSpeed * Time.deltaTime;
 		} else {
@@ -71,7 +77,10 @@ public class GameManager : MonoBehaviour {
 
 	public void AddCurrency(int increment) {
 		currency += increment;
-		currencyText.text = "Worms: " + currency;
+	}
+
+	public void RemoveCurrency(int toRemove) {
+		currency -= toRemove;
 	}
 
 	void AddScore() {
@@ -79,11 +88,16 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void SetHighscore() {
-		int s = score * ((int)currency / multiplier);
-		if(s > PlayerPrefs.GetInt("highscore")) {
-			
+		totalScore = score * ((int)currency / multiplier);
+		
+		if(totalScore <= 0) {
+			totalScore = score;
 		}
-		PlayerPrefs.SetInt ("highscore", s);
-		highscore = s;
+
+		if(totalScore > PlayerPrefs.GetInt("highscore")) {
+			PlayerPrefs.SetInt ("highscore", totalScore);
+			highscore = totalScore;
+		}
+		
 	}
 }

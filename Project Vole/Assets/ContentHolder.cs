@@ -27,7 +27,7 @@ public class ContentHolder : MonoBehaviour {
 					foreach(string s in PowerupManager.instance.sprites.Keys) {
 						if(i == reach) {
 							powerupName = s;
-							return;
+							break;
 						}
 						i++;
 					}

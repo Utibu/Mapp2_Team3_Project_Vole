@@ -37,8 +37,16 @@ public class Chunk : MonoBehaviour {
 		//Debug.Log (newGameObject.name);
 	}
 
-	public void HideContentHolder() {
-		contentHolder.SetActive (false);
+	public void HideContentHolder(string byTag = "") {
+		//Debug.Log("HIDE " + byTag);
+		if(contentHolder.transform.childCount > 0) {
+			foreach(Transform child in contentHolder.transform.GetChild(0).transform) {
+				if(byTag.Equals("") || child.gameObject.tag.Equals(byTag)) {
+					child.gameObject.SetActive (false);
+				}
+			}
+		}
+		
 	}
 
 	public void ShowContentHolder() {

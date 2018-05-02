@@ -18,6 +18,8 @@ public class Shake : MonoBehaviour {
 
 	private int timesLeft;
 
+	private Player player;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -58,7 +60,9 @@ public class Shake : MonoBehaviour {
 		timesLeft--;
 	}
 
-	public void StartShake(int times) {
+	public void StartShake(int times, Player player) {
+		this.player = player;
+		this.player.isInvisible = true;
 		startTime = Time.time;
 		timesLeft = times;
 		originalPosition = Camera.main.transform.position;
@@ -80,6 +84,7 @@ public class Shake : MonoBehaviour {
 	}
 
 	private void ShakeFinished() {
-		GameManager.instance.world.GetComponent<World> ().HideAllObjects ();
+		GameManager.instance.world.GetComponent<World> ().HideAllObjects ("Obstacle");
+		this.player.isInvisible = false;
 	}
 }

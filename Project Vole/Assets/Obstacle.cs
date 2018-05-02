@@ -15,7 +15,12 @@ public class Obstacle : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D col) {
 		if(col.gameObject.tag.Equals("Player")) {
-			col.gameObject.GetComponent<Player> ().Die ();
+			if(!col.gameObject.GetComponent<Player>().isInvisible) {
+				col.gameObject.GetComponent<Player> ().Die ();
+			} else {
+				this.gameObject.GetComponent<Collider2D>().isTrigger = true;
+			}
+			
 		} else if(col.gameObject.tag.Equals("Projectile")) {
 			gameObject.SetActive (false);
 			col.gameObject.GetComponent<WormProjectile> ().Die ();
