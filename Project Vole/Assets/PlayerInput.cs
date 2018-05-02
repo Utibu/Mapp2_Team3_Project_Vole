@@ -127,6 +127,7 @@ public class PlayerInput : MonoBehaviour {
 			if(Time.time < lastPress + fastPressLimitInSeconds) {
 				fastPress = true;
 			}
+			lastPress = Time.time;
 		}
 
 		if(Input.GetKeyUp(KeyCode.Space) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)) {
@@ -136,6 +137,7 @@ public class PlayerInput : MonoBehaviour {
 
 		if(fastPress) {
 			transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, 0f));
+			//rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y));
 		} 
 
 		if(Time.time > lastPress + fastPressLimitInSeconds) {

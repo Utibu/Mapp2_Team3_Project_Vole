@@ -34,6 +34,7 @@ public class Player : MonoBehaviour {
 		GameManager.instance.SetHighscore ();
 		setActive.Activate();
 		GameManager.instance.gameOver = true;
+		GameManager.instance.canvas.gameObject.SetActive(false);
 		gameObject.SetActive (false);
     }
 

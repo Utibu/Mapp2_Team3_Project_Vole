@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour {
 	public int multiplier;
 	public int totalScore;
 	public bool gameOver = false;
+	public Canvas canvas;
 
 	bool x = false;
 
