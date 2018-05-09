@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour {
 			//world.transform.position = new Vector3 ((chunkWidth / 2), world.transform.position.y);
 		}*/
 
-		if (Input.GetKeyUp (KeyCode.B)) {
+		if (Input.GetKeyUp (KeyCode.X)) {
 			x = x ? false : true;
 			Debug.Log ("ÄNDRAT!!! x = " + x); 
 		}

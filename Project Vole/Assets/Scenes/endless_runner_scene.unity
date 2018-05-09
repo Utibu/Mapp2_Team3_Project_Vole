@@ -978,7 +978,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 231669659}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children:
   - {fileID: 653711159}
@@ -997,7 +997,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedDownMovement: 0.1
-  speedUpMovement: 0.05
+  speedUpMovement: 0.1
   trail: {fileID: 68913493}
   player: {fileID: 939921257}
   fastPressLimitInSeconds: 0.5
@@ -1166,7 +1166,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 3:-
+  m_Text: 3
 --- !u!222 &371898258
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1775,14 +1775,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 939921254}
-  m_LocalRotation: {x: 0, y: 0, z: 0.3420201, w: 0.9396927}
+  m_LocalRotation: {x: 0, y: 0, z: 0.033155207, w: 0.9994502}
   m_LocalPosition: {x: -5.64, y: 2.97, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 231669663}
   m_Father: {fileID: 0}
   m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 40}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 3.8}
 --- !u!50 &939921256
 Rigidbody2D:
   serializedVersion: 4
@@ -2017,6 +2017,7 @@ MonoBehaviour:
   chunkPrefab: {fileID: 1774394669780522, guid: 3cd2f3adc72444a26805c79a984dea96,
     type: 2}
   trail: {fileID: 68913495}
+  SpawnContent: 1
 --- !u!1 &1088795973
 GameObject:
   m_ObjectHideFlags: 0

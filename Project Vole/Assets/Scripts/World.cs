@@ -14,6 +14,8 @@ public class World : MonoBehaviour {
 
 	public LineRenderer trail;
 
+	public bool SpawnContent = true;
+
 	// Use this for initialization
 	void Start () {
 		/*GameObject[] chunckObjects = GameObject.FindGameObjectsWithTag ("Chunk");
@@ -51,7 +53,8 @@ public class World : MonoBehaviour {
 			chunkList.RemoveAt (0);
 			c.transform.position = new Vector3 (chunkList[chunkList.Count - 1].transform.position.x + chunkSize, c.transform.position.y);
 			c.SetActive (true);
-			c.GetComponent<Chunk> ().SetContent (RequestContent ()); 
+			if(SpawnContent)
+				c.GetComponent<Chunk> ().SetContent (RequestContent ()); 
 			chunkList.Add (c);
 		}
 			

@@ -10,6 +10,7 @@ public class PlayerInput : MonoBehaviour {
 	public Player player;
 
 	private float distance;
+	private float originalSpriteWidth;
 	private float distanceToBottom;
 	private bool hasGeneratedTrailRecently;
 
@@ -28,11 +29,12 @@ public class PlayerInput : MonoBehaviour {
 		rgdbd2d = transform.parent.GetComponent<Rigidbody2D>();
 		lastTrailSpawn = Time.time;
 		lastPress = Time.time - 1f;
-
+		originalSpriteWidth = GetComponent<SpriteRenderer>().bounds.size.x;
     }
 
 	bool isTouchingTop() {
-		RaycastHit2D[] hitsAbove = Physics2D.RaycastAll (transform.position, Vector2.up, distance + 0.1f);
+		RaycastHit2D[] hitsAbove = Physics2D.RaycastAll (rgdbd2d.position, new Vector2(0, 1), distance + 0.05f);
+		Debug.DrawRay(rgdbd2d.position, new Vector2(0, distance + 0.05f), Color.blue);
 
 		foreach(RaycastHit2D hit in hitsAbove) {
 			if(hit.collider.tag.Equals("Ground")) {
@@ -44,7 +46,7 @@ public class PlayerInput : MonoBehaviour {
 	}
 
 	bool isTouchingBottom() {
-		RaycastHit2D[] hitsUnder = Physics2D.RaycastAll (transform.position, -Vector2.up, distance + 0.1f);
+		RaycastHit2D[] hitsUnder = Physics2D.RaycastAll (transform.position, -Vector2.up, distance + 0.05f);
 
 		foreach(RaycastHit2D hit in hitsUnder) {
 			if(hit.collider.tag.Equals("Ground")) {
@@ -82,79 +84,42 @@ public class PlayerInput : MonoBehaviour {
 
 		//Debug.Log (Input.touchCount);
 
-		if (Input.GetKey (KeyCode.Space)||(Input.touchCount ==1)  || (Input.mousePresent && Input.GetMouseButton(0))) { //&& (Input.GetTouch(0).phase == TouchPhase.Stationary || Input.GetTouch(0).phase == TouchPhase.Moved))
+		if (Input.GetKey (KeyCode.Space)||(Input.touchCount == 1)  || (Input.mousePresent && Input.GetMouseButton(0))) { //&& (Input.GetTouch(0).phase == TouchPhase.Stationary || Input.GetTouch(0).phase == TouchPhase.Moved))
 			rgdbd2d.velocity = Vector3.zero;
 			rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y - speedDownMovement));
 
+			float rad = Mathf.Atan2 (speedDownMovement, xSpeed * Time.deltaTime);
+			float deg = Mathf.Rad2Deg * rad - 90;
+			transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, deg));
+
+			distance = Mathf.Cos((Mathf.PI / 2) - rad) * (originalSpriteWidth / 2);
+
 			if(isTouchingBottom()) {
 				transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, 0f));
-
+				rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y));
 			} else {
-				float rad = Mathf.Atan2 (speedDownMovement, xSpeed * Time.deltaTime);
-				float deg = Mathf.Rad2Deg * rad - 90;
 				transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, deg));
-				//Debug.Log ("DOWN: " + deg + " spd " + speedUpMovement + " h " + xSpeed * Time.deltaTime + " --- " + Mathf.Rad2Deg * rad);
 			}
 		}
-        else if (Input.GetKey(KeyCode.B)|| Input.touchCount > 1)
+        else if (Input.GetKey(KeyCode.B)|| Input.touchCount > 1 || (Input.GetMouseButton(0) && Input.GetMouseButton(1)))
         {
             transform.parent.rotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
         }
 		else
 		{
 			rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y + speedUpMovement));
+			float rad = Mathf.Atan2 (speedUpMovement, xSpeed * Time.deltaTime);
+			float deg = Mathf.Rad2Deg * rad;
+			
+			distance = Mathf.Cos((Mathf.PI / 2) - rad) * (originalSpriteWidth / 2);
+
 			if(isTouchingTop()) {
 				transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, 0f));
+				rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y));
 			} else {
-				float rad = Mathf.Atan2 (speedUpMovement, xSpeed * Time.deltaTime);
-				float deg = Mathf.Rad2Deg * rad;
 				transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, deg));
-				//Debug.Log ("UP: " + deg + " spd " + speedUpMovement + " h " + xSpeed * Time.deltaTime + " --- " + Mathf.Rad2Deg * rad);
 			}
 		}
-		distance = GetComponent<Collider2D> ().bounds.extents.y;
-
-		/*if((Input.touchCount > 0 && (Input.GetTouch (0).phase == TouchPhase.Ended)) || (Input.mousePresent && Input.GetMouseButtonUp(0))) {
-			lastPress = Time.time;
-		} else {
-			
-		}
-		if ((Input.touchCount > 0 && (Input.GetTouch (0).phase == TouchPhase.Began)) || (Input.mousePresent && Input.GetMouseButtonDown(0))) {
-			if(Time.time < lastPress + 0.5f) {
-				transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, 0f));
-			} else {
-
-			}
-		}*/
-
-		if(Input.GetKeyDown(KeyCode.Space) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)) {
-			if(Time.time < lastPress + fastPressLimitInSeconds) {
-				fastPress = true;
-			}
-			lastPress = Time.time;
-		}
-
-		if(Input.GetKeyUp(KeyCode.Space) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)) {
-			lastPress = Time.time;
-		}
-
-
-		if(fastPress) {
-			transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, 0f));
-			//rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y));
-		} 
-
-		if(Time.time > lastPress + fastPressLimitInSeconds) {
-			fastPress = false;
-		}
-
-
-
-
-
-
-
-
 
 	}
 
