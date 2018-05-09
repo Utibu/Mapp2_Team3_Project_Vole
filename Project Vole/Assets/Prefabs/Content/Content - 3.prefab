@@ -286,6 +286,7 @@ GameObject:
   - component: {fileID: 4573845187644876}
   - component: {fileID: 212008317101127178}
   - component: {fileID: 61498113897220344}
+  - component: {fileID: 114144976387497794}
   m_Layer: 0
   m_Name: Root1
   m_TagString: Obstacle
@@ -654,7 +655,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.492}
+    oldSize: {x: 1, y: 0.504}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -704,7 +705,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.9}
+    oldSize: {x: 1, y: 0.84}
     newSize: {x: 1, y: 0.9}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -729,7 +730,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.9}
+    oldSize: {x: 1, y: 0.84}
     newSize: {x: 1, y: 0.9}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -754,7 +755,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.492}
+    oldSize: {x: 1, y: 0.504}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -779,7 +780,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.9}
+    oldSize: {x: 1, y: 0.84}
     newSize: {x: 1, y: 0.9}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -804,7 +805,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.492}
+    oldSize: {x: 1, y: 0.504}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -829,7 +830,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2.136}
+    oldSize: {x: 2, y: 2.116}
     newSize: {x: 2, y: 2.136}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -889,6 +890,18 @@ MonoBehaviour:
   powerupPlaceholders:
   - {fileID: 114552097058373258}
   - {fileID: 114379460987538546}
+--- !u!114 &114144976387497794
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1908783725049736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 488bbb87e11254d1daa187734ec35304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allowRotation: 0
 --- !u!114 &114201849782279300
 MonoBehaviour:
   m_ObjectHideFlags: 1

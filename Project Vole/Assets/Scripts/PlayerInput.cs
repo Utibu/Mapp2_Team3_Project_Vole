@@ -82,7 +82,7 @@ public class PlayerInput : MonoBehaviour {
 
 		//Debug.Log (Input.touchCount);
 
-		if (Input.GetKey (KeyCode.Space)||(Input.touchCount > 0 && (Input.GetTouch (0).phase == TouchPhase.Stationary || Input.GetTouch (0).phase == TouchPhase.Moved)) || (Input.mousePresent && Input.GetMouseButton(0))) {
+		if (Input.GetKey (KeyCode.Space)||(Input.touchCount ==1)  || (Input.mousePresent && Input.GetMouseButton(0))) { //&& (Input.GetTouch(0).phase == TouchPhase.Stationary || Input.GetTouch(0).phase == TouchPhase.Moved))
 			rgdbd2d.velocity = Vector3.zero;
 			rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y - speedDownMovement));
 
@@ -96,6 +96,10 @@ public class PlayerInput : MonoBehaviour {
 				//Debug.Log ("DOWN: " + deg + " spd " + speedUpMovement + " h " + xSpeed * Time.deltaTime + " --- " + Mathf.Rad2Deg * rad);
 			}
 		}
+        else if (Input.GetKey(KeyCode.B)|| Input.touchCount > 1)
+        {
+            transform.parent.rotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
+        }
 		else
 		{
 			rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y + speedUpMovement));

@@ -181,6 +181,7 @@ GameObject:
   - component: {fileID: 4227058092336140}
   - component: {fileID: 212771186317897680}
   - component: {fileID: 61846884746457658}
+  - component: {fileID: 114339685224633932}
   m_Layer: 0
   m_Name: Root1 (1)
   m_TagString: Obstacle
@@ -321,6 +322,7 @@ GameObject:
   - component: {fileID: 4940423842389126}
   - component: {fileID: 212579678080317532}
   - component: {fileID: 61165658256054500}
+  - component: {fileID: 114915625078898232}
   m_Layer: 0
   m_Name: Root1
   m_TagString: Obstacle
@@ -939,7 +941,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.492}
+    oldSize: {x: 1, y: 0.504}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -964,7 +966,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.492}
+    oldSize: {x: 1, y: 0.504}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -989,7 +991,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.492}
+    oldSize: {x: 1, y: 0.504}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1014,7 +1016,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.9}
+    oldSize: {x: 1, y: 0.84}
     newSize: {x: 1, y: 0.9}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1039,7 +1041,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.9}
+    oldSize: {x: 1, y: 0.84}
     newSize: {x: 1, y: 0.9}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1064,7 +1066,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2.136}
+    oldSize: {x: 2, y: 2.116}
     newSize: {x: 2, y: 2.136}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1089,7 +1091,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.492}
+    oldSize: {x: 1, y: 0.504}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1164,7 +1166,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.9}
+    oldSize: {x: 1, y: 0.84}
     newSize: {x: 1, y: 0.9}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1189,7 +1191,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.9}
+    oldSize: {x: 1, y: 0.84}
     newSize: {x: 1, y: 0.9}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1214,7 +1216,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.9}
+    oldSize: {x: 1, y: 0.84}
     newSize: {x: 1, y: 0.9}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1239,7 +1241,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2.136}
+    oldSize: {x: 2, y: 2.116}
     newSize: {x: 2, y: 2.136}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1264,7 +1266,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.492}
+    oldSize: {x: 1, y: 0.504}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1289,7 +1291,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.9}
+    oldSize: {x: 1, y: 0.84}
     newSize: {x: 1, y: 0.9}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1358,6 +1360,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allowRotation: 1
+--- !u!114 &114339685224633932
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1476767950683900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 488bbb87e11254d1daa187734ec35304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allowRotation: 0
 --- !u!114 &114352204573658972
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1544,6 +1558,18 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1909934258697138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 488bbb87e11254d1daa187734ec35304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allowRotation: 0
+--- !u!114 &114915625078898232
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1651439674214264}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 488bbb87e11254d1daa187734ec35304, type: 3}
