@@ -907,6 +907,7 @@ GameObject:
   - component: {fileID: 231669662}
   - component: {fileID: 231669664}
   - component: {fileID: 231669661}
+  - component: {fileID: 231669660}
   m_Layer: 0
   m_Name: Proto_Vole
   m_TagString: Player
@@ -914,6 +915,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!95 &231669660
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 231669659}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9bec704ddb06e4c32848679d81266b9d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!70 &231669661
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1000,6 +1018,7 @@ MonoBehaviour:
   speedUpMovement: 0.1
   trail: {fileID: 68913493}
   player: {fileID: 939921257}
+  animationSpeedClimbing: 1.5
   fastPressLimitInSeconds: 0.5
 --- !u!1 &304967405
 GameObject:

@@ -8,6 +8,7 @@ public class PlayerInput : MonoBehaviour {
 	public float speedUpMovement = 0f;
 	public GameObject trail;
 	public Player player;
+	public float animationSpeedClimbing = 1f;
 
 	private float distance;
 	private float originalSpriteWidth;
@@ -22,6 +23,7 @@ public class PlayerInput : MonoBehaviour {
 	private float lastPress;
 	private bool fastPress = false;
 	public float fastPressLimitInSeconds;
+	private bool isRotated = false;
 
     // Use this for initialization
     void Start(){
@@ -97,13 +99,16 @@ public class PlayerInput : MonoBehaviour {
 			if(isTouchingBottom()) {
 				transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, 0f));
 				rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y));
+				isRotated = false;
 			} else {
 				transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, deg));
+				isRotated = true;
 			}
 		}
         else if (Input.GetKey(KeyCode.B)|| Input.touchCount > 1 || (Input.GetMouseButton(0) && Input.GetMouseButton(1)))
         {
             transform.parent.rotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
+			isRotated = false;
         }
 		else
 		{
@@ -116,9 +121,17 @@ public class PlayerInput : MonoBehaviour {
 			if(isTouchingTop()) {
 				transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, 0f));
 				rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y));
+				isRotated = false;
 			} else {
 				transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, deg));
+				isRotated = true;
 			}
+		}
+
+		if(isRotated) {
+			GetComponent<Animator>().speed = animationSpeedClimbing;
+		} else {
+			GetComponent<Animator>().speed = 1f;
 		}
 
 	}
