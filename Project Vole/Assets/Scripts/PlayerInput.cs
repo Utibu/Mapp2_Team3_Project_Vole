@@ -79,6 +79,12 @@ public class PlayerInput : MonoBehaviour {
 		lastTrailSpawn = Time.time;
 	}
 
+	private void Rotate(float deg) {
+		//transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, deg));
+		CodeAnimation c = new VectorSlerp(transform.parent.rotation * new Vector3(0f, 0f, 1f), new Vector3 (0f, 0f, deg), 1f, transform, VectorType.ROTATE);
+		CodeAnimationController.instance.Add(c);
+	}
+
 	void FixedUpdate() {
 
 		//Rotation
@@ -92,22 +98,21 @@ public class PlayerInput : MonoBehaviour {
 
 			float rad = Mathf.Atan2 (speedDownMovement, xSpeed * Time.deltaTime);
 			float deg = Mathf.Rad2Deg * rad - 90;
-			transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, deg));
 
 			distance = Mathf.Cos((Mathf.PI / 2) - rad) * (originalSpriteWidth / 2);
 
 			if(isTouchingBottom()) {
-				transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, 0f));
+				Rotate(0f);
 				rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y));
 				isRotated = false;
 			} else {
-				transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, deg));
+				Rotate(deg);
 				isRotated = true;
 			}
 		}
         else if (Input.GetKey(KeyCode.B)|| Input.touchCount > 1 || (Input.GetMouseButton(0) && Input.GetMouseButton(1)))
         {
-            transform.parent.rotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
+            Rotate(0f);
 			isRotated = false;
         }
 		else
@@ -119,11 +124,11 @@ public class PlayerInput : MonoBehaviour {
 			distance = Mathf.Cos((Mathf.PI / 2) - rad) * (originalSpriteWidth / 2);
 
 			if(isTouchingTop()) {
-				transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, 0f));
+				Rotate(0f);
 				rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y));
 				isRotated = false;
 			} else {
-				transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, deg));
+				Rotate(deg);
 				isRotated = true;
 			}
 		}
