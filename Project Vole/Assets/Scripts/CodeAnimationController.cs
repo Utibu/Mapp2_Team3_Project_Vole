@@ -6,11 +6,16 @@ using UnityEngine;
 public class CodeAnimation {
     protected int hashCode = 0;
     public bool done { get; protected set; }
+    public bool paused;
     public GameObject g { get; protected set; }
 
     public CodeAnimation(GameObject g) {
         done = false;
         this.g = g;
+    }
+
+    public virtual void Reset(CodeAnimation c) {
+
     }
 
     public virtual void Update() {
@@ -27,31 +32,58 @@ public class VectorSlerp: CodeAnimation {
     private float startTime;
     private Vector3 currentVector;
     private Transform transform;
+    private float t;
 
     
     private VectorType type;
 
     public VectorSlerp(Vector3 from, Vector3 to, float journeyTime, Transform transform, VectorType type) : base(transform.gameObject) {
+        if(originalVector3 != null && from == originalVector3) {
+            return;
+        }
+        done = false;
         originalVector3 = from;
         newVector3 = to;
         this.journeyTime = journeyTime;
         this.startTime = Time.time;
         this.transform = transform;
         this.type = type;
-        this.hashCode = 1;
-        //this.hashCode = 1;
+        t = 0;
         currentVector = originalVector3;
-        Debug.Log("KJKJK");
+        //Debug.Log("KJKJK");
     }
 
     public override void Update() {
-        
-        float fracComplete = (Time.time - startTime) / journeyTime;
-        Debug.Log("ROTATING " + fracComplete);
-        currentVector = Vector3.Slerp(currentVector, newVector3, fracComplete);
-        if(fracComplete >= 1) {
+        if(paused)
+            return;
+       // float fracComplete = (Time.time - startTime) / journeyTime;
+        t += (Time.time - startTime) / journeyTime;
+        //Debug.Log("ROTATING " + t);
+        currentVector = Vector3.Slerp(originalVector3, newVector3, t);
+        if(t >= 1f) {
+           // Debug.Log("DONE");
             done = true;
         }
+
+        HandleUpdate();
+    }
+
+    public override void Reset(CodeAnimation c) {
+        VectorSlerp vs = (VectorSlerp) c;
+        if(originalVector3 != null && vs.newVector3 == newVector3) {
+            return;
+        }
+        paused = false;
+        done = false;
+       // Debug.Log("RESET: " + vs.newVector3 + " FROM: " + vs.originalVector3);
+        originalVector3 = vs.originalVector3;
+        newVector3 = vs.newVector3;
+        journeyTime = vs.journeyTime;
+        startTime = Time.time;
+        transform = vs.transform;
+        type = vs.type;
+        t = 0;
+        currentVector = vs.originalVector3;
     }
 
     public void HandleUpdate() {
@@ -92,13 +124,19 @@ public class CodeAnimationController: MonoBehaviour {
             
        // }
 
+       bool found = false;
+
        foreach(CodeAnimation a in animations) {
            if(a.g == anim.g) {
-               return;
+               //Debug.Log("dfgffgfg");
+               a.Reset(anim);
+               found = true;
+               break;
            }
        }
 
-        animations.Add(anim);
+        if(!found)
+            animations.Add(anim);
        
        /* if(!wentOk) {
             Debug.LogWarning("ALREADY EXISTS IN CODE-ANIMATION");
@@ -106,11 +144,11 @@ public class CodeAnimationController: MonoBehaviour {
     }
 
     public void Update() {
-        Debug.Log(animations.Count);
-        foreach(CodeAnimation anim in animations.ToList()) {
+        //Debug.Log(animations.Count);
+        foreach(CodeAnimation anim in animations) {
             anim.Update();
             if(anim.done) {
-                animations.Remove(anim);
+                anim.paused = true;
             }
         }
     }

@@ -81,7 +81,11 @@ public class PlayerInput : MonoBehaviour {
 
 	private void Rotate(float deg) {
 		//transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, deg));
-		CodeAnimation c = new VectorSlerp(transform.parent.rotation * new Vector3(0f, 0f, 1f), new Vector3 (0f, 0f, deg), 1f, transform, VectorType.ROTATE);
+		//if(transform.parent.rotation.z != 0f)
+			//Rotate(0f);
+		//Debug.Log(transform.rotation.z);
+		CodeAnimation c = new VectorSlerp(transform.parent.rotation * new Vector3(0f, 0f, 1f), new Vector3 (0f, 0f, deg), 5f, transform, VectorType.ROTATE);
+		//Debug.Log(((VectorSlerp)c).originalVector3);
 		CodeAnimationController.instance.Add(c);
 	}
 
@@ -89,6 +93,7 @@ public class PlayerInput : MonoBehaviour {
 
 		//Rotation
 		float xSpeed = GameManager.instance.worldMoveSpeed;
+		float rotation = transform.parent.rotation.z;
 
 		//Debug.Log (Input.touchCount);
 
