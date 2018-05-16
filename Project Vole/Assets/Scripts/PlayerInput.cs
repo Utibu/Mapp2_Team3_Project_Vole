@@ -9,6 +9,7 @@ public class PlayerInput : MonoBehaviour {
 	public GameObject trail;
 	public Player player;
 	public float animationSpeedClimbing = 1f;
+	public float rotationSpeed = 3f;
 
 	private float distance;
 	private float originalSpriteWidth;
@@ -35,11 +36,13 @@ public class PlayerInput : MonoBehaviour {
     }
 
 	bool isTouchingTop() {
+		
 		RaycastHit2D[] hitsAbove = Physics2D.RaycastAll (rgdbd2d.position, new Vector2(0, 1), distance + 0.05f);
 		Debug.DrawRay(rgdbd2d.position, new Vector2(0, distance + 0.05f), Color.blue);
 
 		foreach(RaycastHit2D hit in hitsAbove) {
 			if(hit.collider.tag.Equals("Ground")) {
+				//Debug.Log("IS TOUCHING TOP");
 				return true;
 			}
 		}
@@ -79,13 +82,14 @@ public class PlayerInput : MonoBehaviour {
 		lastTrailSpawn = Time.time;
 	}
 
-	private void Rotate(float deg) {
+	private void Rotate(float deg, string message = "") {
 		//transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, deg));
 		//if(transform.parent.rotation.z != 0f)
 			//Rotate(0f);
-		//Debug.Log(transform.rotation.z);
-		CodeAnimation c = new VectorSlerp(transform.parent.rotation * new Vector3(0f, 0f, 1f), new Vector3 (0f, 0f, deg), 5f, transform, VectorType.ROTATE);
-		//Debug.Log(((VectorSlerp)c).originalVector3);
+		//Debug.Log(transform.rotation.eulerAngles.z + " PARENT");
+		//Debug.Log(transform.parent.rotation.eulerAngles.z + " PARENT");
+		CodeAnimation c = new VectorSlerp(new Vector3(0f, 0f, transform.parent.rotation.eulerAngles.z), new Vector3 (0f, 0f, deg), rotationSpeed, transform, VectorType.ROTATE);
+		//Debug.Log(message + ", " + deg + " --- " + new Vector3(0f, 0f, transform.parent.rotation.eulerAngles.z) + " --- " + (new Vector3 (0f, 0f, deg)));
 		CodeAnimationController.instance.Add(c);
 	}
 
@@ -106,18 +110,19 @@ public class PlayerInput : MonoBehaviour {
 
 			distance = Mathf.Cos((Mathf.PI / 2) - rad) * (originalSpriteWidth / 2);
 
-			if(isTouchingBottom()) {
-				Rotate(0f);
+			if(!isTouchingBottom()) {
+				Rotate(deg);
+				//Debug.Log("rotate_deg_down");
+				isRotated = true;
+			} else {
+				Rotate(0f, "b");
 				rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y));
 				isRotated = false;
-			} else {
-				Rotate(deg);
-				isRotated = true;
 			}
 		}
         else if (Input.GetKey(KeyCode.B)|| Input.touchCount > 1 || (Input.GetMouseButton(0) && Input.GetMouseButton(1)))
         {
-            Rotate(0f);
+            Rotate(0f, "dd");
 			isRotated = false;
         }
 		else
@@ -128,13 +133,14 @@ public class PlayerInput : MonoBehaviour {
 			
 			distance = Mathf.Cos((Mathf.PI / 2) - rad) * (originalSpriteWidth / 2);
 
-			if(isTouchingTop()) {
-				Rotate(0f);
+			if(!isTouchingTop()) {
+				Rotate(deg);
+				//Debug.Log("rotate_deg_up");
+				isRotated = true;
+			} else {
+				Rotate(0f, "t");
 				rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y));
 				isRotated = false;
-			} else {
-				Rotate(deg);
-				isRotated = true;
 			}
 		}
 

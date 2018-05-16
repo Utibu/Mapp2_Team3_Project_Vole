@@ -38,9 +38,6 @@ public class VectorSlerp: CodeAnimation {
     private VectorType type;
 
     public VectorSlerp(Vector3 from, Vector3 to, float journeyTime, Transform transform, VectorType type) : base(transform.gameObject) {
-        if(originalVector3 != null && from == originalVector3) {
-            return;
-        }
         done = false;
         originalVector3 = from;
         newVector3 = to;
@@ -59,7 +56,13 @@ public class VectorSlerp: CodeAnimation {
        // float fracComplete = (Time.time - startTime) / journeyTime;
         t += (Time.time - startTime) / journeyTime;
         //Debug.Log("ROTATING " + t);
-        currentVector = Vector3.Slerp(originalVector3, newVector3, t);
+        if(type == VectorType.ROTATE) {
+            float v = Mathf.LerpAngle(originalVector3.z, newVector3.z, t);
+            currentVector = new Vector3(0f, 0f, v);
+        } else {
+            currentVector = Vector3.Slerp(originalVector3, newVector3, t);
+        }
+        
         if(t >= 1f) {
            // Debug.Log("DONE");
             done = true;
@@ -70,12 +73,15 @@ public class VectorSlerp: CodeAnimation {
 
     public override void Reset(CodeAnimation c) {
         VectorSlerp vs = (VectorSlerp) c;
-        if(originalVector3 != null && vs.newVector3 == newVector3) {
+        //Debug.LogWarning("WANTS TO RESET!!! " + vs.originalVector3 + " TO: " + vs.newVector3 + " AND CHECKING IF NOT SIMILAR TO " + newVector3);
+        if(newVector3 == null || vs.newVector3 == newVector3) {
             return;
         }
+        //Debug.LogWarning(vs.originalVector3);
         paused = false;
         done = false;
        // Debug.Log("RESET: " + vs.newVector3 + " FROM: " + vs.originalVector3);
+        //originalVector3 = new Vector3(0f, 0f, transform.rotation.z);
         originalVector3 = vs.originalVector3;
         newVector3 = vs.newVector3;
         journeyTime = vs.journeyTime;
@@ -83,10 +89,14 @@ public class VectorSlerp: CodeAnimation {
         transform = vs.transform;
         type = vs.type;
         t = 0;
-        currentVector = vs.originalVector3;
+        currentVector = originalVector3;
     }
 
     public void HandleUpdate() {
+        if(transform == null) {
+            return; 
+        }
+
         switch(type) {
             case VectorType.ROTATE:
                 transform.parent.rotation = Quaternion.Euler (currentVector);
@@ -129,6 +139,7 @@ public class CodeAnimationController: MonoBehaviour {
        foreach(CodeAnimation a in animations) {
            if(a.g == anim.g) {
                //Debug.Log("dfgffgfg");
+               //Debug.LogError(((VectorSlerp)anim).newVector3);
                a.Reset(anim);
                found = true;
                break;
