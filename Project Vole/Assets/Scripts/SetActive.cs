@@ -25,7 +25,7 @@ public class SetActive : MonoBehaviour {
         gameObject.SetActive(true);
 		scoreText.text = "Score: " + GameManager.instance.score;
 		wormText.text = "" + GameManager.instance.currency;
-		totalText.text = "" + GameManager.instance.totalScore;
+		totalText.text = "Total score: " + GameManager.instance.totalScore;
 
 		if(GameManager.instance.totalScore == GameManager.instance.highscore) {
 			highscoreText.text = "New highscore!";

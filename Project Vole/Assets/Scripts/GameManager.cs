@@ -13,16 +13,13 @@ public class GameManager : MonoBehaviour {
 	public float chunkWidth = 20f;
 	public int scorePerSecond;
 	public int score;
-	public Text currencyText;
-	public Text scoreText;
 	public int highscore;
-	public Text highscoreText;
 
 	public int currency { get; protected set; }
 	public int multiplier;
 	public int totalScore;
 	public bool gameOver = false;
-	public Canvas canvas;
+	public float wormMultiplier = 1f;
 
 	bool x = false;
 
@@ -58,10 +55,7 @@ public class GameManager : MonoBehaviour {
 		}
 
 		if(!gameOver) {
-			scoreText.text = "Score: " + score;
-			highscoreText.text = "Highscore: " + highscore;
-			//Debug.Log(highscore);
-			currencyText.text = "Worms: " + currency;
+			UIManager.instance.OnGameRunning("Score: " + score, "Highscore: " + highscore, "Worms: " + currency);
 		}
 		
 		if(x) {

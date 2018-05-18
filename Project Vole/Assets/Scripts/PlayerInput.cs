@@ -144,6 +144,10 @@ public class PlayerInput : MonoBehaviour {
 			}
 		}
 
+		if(Input.GetKeyDown(KeyCode.L)) {
+			player.Die();
+		}
+
 		if(isRotated) {
 			GetComponent<Animator>().speed = animationSpeedClimbing;
 		} else {

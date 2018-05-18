@@ -65,6 +65,7 @@ public class PowerupManager : MonoBehaviour {
 		switch(name) {
 		case "shake":
 			triggerButton.onClick.AddListener(() => TriggerPowerupGUI("shake"));
+			triggerButton.transform.Find("Image").GetComponent<Image>().sprite = sprites["shake"];
 			triggerButton.interactable = true;
 			break;
 		default:
