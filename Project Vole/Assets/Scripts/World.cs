@@ -69,12 +69,12 @@ public class World : MonoBehaviour {
 			//g.transform.position += Vector3.left * GameManager.instance.worldMoveSpeed * Time.deltaTime;
 		}
 
-		Vector3[] positions = new Vector3[trail.positionCount];
+/*		Vector3[] positions = new Vector3[trail.positionCount];
 		trail.GetPositions (positions);
 		for(int i = 0; i < positions.Length; i++) {
 			positions [i] = new Vector3 (positions [i].x - worldMoveSpeed * Time.deltaTime, positions [i].y, positions [i].z);
 		}
-		trail.SetPositions (positions);
+		trail.SetPositions (positions);*/
 	}
 
 	public void HideAllObjects(string byTag = "") {

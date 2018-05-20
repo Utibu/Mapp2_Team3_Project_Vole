@@ -6,7 +6,6 @@ public class PlayerInput : MonoBehaviour {
 
     public float speedDownMovement = 0f;
 	public float speedUpMovement = 0f;
-	public GameObject trail;
 	public Player player;
 	public float animationSpeedClimbing = 1f;
 	public float rotationSpeed = 3f;
@@ -25,6 +24,8 @@ public class PlayerInput : MonoBehaviour {
 	private bool fastPress = false;
 	public float fastPressLimitInSeconds;
 	private bool isRotated = false;
+
+	public Trail trail;
 
     // Use this for initialization
     void Start(){
@@ -64,24 +65,6 @@ public class PlayerInput : MonoBehaviour {
 
 	// Update is called once per frame
 
-	void NewTrail(LineRenderer lr) {
-		return;
-		if(Time.time < lastTrailSpawn + 0.5f) {
-			lr.endWidth = 1.2f;
-			lastTrailSpawn = Time.time;
-			trailIsBig = true;
-			return;
-		}
-
-		return;
-		lr.positionCount += 1;
-		//To create a new anchor
-		//lr.SetPosition (lr.positionCount - 2, lr.GetPosition (lr.positionCount - 3));
-		lr.SetPosition (lr.positionCount - 1, transform.position);
-		hasGeneratedTrailRecently = true;
-		lastTrailSpawn = Time.time;
-	}
-
 	private void Rotate(float deg, string message = "") {
 		//transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, deg));
 		//if(transform.parent.rotation.z != 0f)
@@ -109,6 +92,7 @@ public class PlayerInput : MonoBehaviour {
 			float deg = Mathf.Rad2Deg * rad - 90;
 
 			distance = Mathf.Cos((Mathf.PI / 2) - rad) * (originalSpriteWidth / 2);
+			//Debug.Log(distance);
 
 			if(!isTouchingBottom()) {
 				Rotate(deg);
@@ -144,6 +128,23 @@ public class PlayerInput : MonoBehaviour {
 			}
 		}
 
+		CodeAnimation c = CodeAnimationController.instance.GetAnimation(this.gameObject);
+		Vector3 rot;
+		if(c != null && c is VectorSlerp) {
+			rot = ((VectorSlerp)c).GetProgress();
+		} else {
+			rot = Vector3.zero;
+		}
+
+		if(rot.z < 0) {
+			rot = new Vector3(rot.x, rot.y, rot.z + 90);
+		}
+
+		float currentDistance= Mathf.Cos((Mathf.PI / 2) - (Mathf.Deg2Rad * rot.z)) * (originalSpriteWidth / 2);
+		Debug.Log(rot);
+		
+		trail.OnUpdate(new Vector3(rgdbd2d.position.x, rgdbd2d.position.y, 0f), isRotated, currentDistance);
+
 		if(Input.GetKeyDown(KeyCode.L)) {
 			player.Die();
 		}
@@ -157,54 +158,7 @@ public class PlayerInput : MonoBehaviour {
 	}
 
 	void Update () {
-        
-		LineRenderer lr = trail.GetComponent<LineRenderer> ();
-
-		if(Input.GetKeyDown(KeyCode.Space) || Input.GetKeyUp(KeyCode.Space)) {
-			//New trail
-			NewTrail (lr);
-			hasGeneratedTrailRecently = false;
-		}
-
-		if (Input.GetKey(KeyCode.Space)) {
-
-			if(isTouchingBottom()) {
-				//New trail
-				if(!hasGeneratedTrailRecently) {
-					NewTrail (lr);	
-					Debug.Log ("GFKDJKDJFKJD"); 
-				}
-
-			}
-		}
-		else
-		{
-			if(isTouchingTop()) {
-				//New trail
-				if(!hasGeneratedTrailRecently) {
-					NewTrail (lr);	
-				}
-			}
-		}
-
-		if(Time.time > lastTrailSpawn + 0.5f && trailIsBig) {
-			lr.endWidth = 1f;
-			NewTrail (lr);
-			trailIsBig = false;
-
-		} else {
-			//lr.SetPosition (lr.positionCount - 1, new Vector3(transform.position.x, lr.GetPosition(lr.positionCount - 1).y, transform.position.z));
-		}
-
-		lr.SetPosition (lr.positionCount - 1, transform.position);
-
-		if(trailIsBig) {
-			//lr.SetPosition (lr.positionCount - 1, new Vector3(transform.position.x, lr.GetPosition(lr.positionCount - 1).y, transform.position.z));
-			//transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, 0f));
-		}
-
-
-
+    
 
 
 		if(Input.GetKeyDown(KeyCode.Return)) {

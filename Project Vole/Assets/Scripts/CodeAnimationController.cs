@@ -71,6 +71,10 @@ public class VectorSlerp: CodeAnimation {
         HandleUpdate();
     }
 
+    public Vector3 GetProgress() {
+        return currentVector;
+    }
+
     public override void Reset(CodeAnimation c) {
         VectorSlerp vs = (VectorSlerp) c;
         //Debug.LogWarning("WANTS TO RESET!!! " + vs.originalVector3 + " TO: " + vs.newVector3 + " AND CHECKING IF NOT SIMILAR TO " + newVector3);
@@ -152,6 +156,20 @@ public class CodeAnimationController: MonoBehaviour {
        /* if(!wentOk) {
             Debug.LogWarning("ALREADY EXISTS IN CODE-ANIMATION");
         }*/
+    }
+
+    public CodeAnimation GetAnimation(GameObject g) {
+        bool found = false;
+        foreach(CodeAnimation a in animations) {
+           if(a.g == g) {
+               //Debug.Log("dfgffgfg");
+               //Debug.LogError(((VectorSlerp)anim).newVector3);
+               return a;
+           }
+       }
+
+       return null;
+
     }
 
     public void Update() {
