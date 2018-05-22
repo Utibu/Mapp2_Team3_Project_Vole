@@ -20,6 +20,8 @@ public class Shake : MonoBehaviour {
 
 	private Player player;
 
+    public AudioClip dynamite;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -68,6 +70,8 @@ public class Shake : MonoBehaviour {
 		originalPosition = Camera.main.transform.position;
 		NextShake ();
 		isRunning = true;
+        GetComponent<AudioSource>().clip = dynamite;
+        GetComponent<AudioSource>().Play();
 	}
 
 	private void RandomizeDirection() {

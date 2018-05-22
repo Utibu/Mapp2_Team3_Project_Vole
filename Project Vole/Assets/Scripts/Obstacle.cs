@@ -7,6 +7,7 @@ public class Obstacle : MonoBehaviour {
 	public bool allowRotation;
 
 	void Start() {
+
 		if(allowRotation) {
 			int rotation = Random.Range (0, 361);
 			transform.rotation = Quaternion.Euler (0, 0, rotation);
@@ -16,7 +17,7 @@ public class Obstacle : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D col) {
 		if(col.gameObject.tag.Equals("Player")) {
 			if(!col.gameObject.GetComponent<Player>().isInvisible) {
-				col.gameObject.GetComponent<Player> ().Die ();
+                col.gameObject.GetComponent<Player> ().Die ();
 			} else {
 				this.gameObject.GetComponent<Collider2D>().isTrigger = true;
 			}
