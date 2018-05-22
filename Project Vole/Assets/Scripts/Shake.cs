@@ -21,6 +21,7 @@ public class Shake : MonoBehaviour {
 	private Player player;
 
     public AudioClip dynamite;
+    public GameObject particles;
 
 	// Use this for initialization
 	void Start () {
@@ -72,6 +73,7 @@ public class Shake : MonoBehaviour {
 		isRunning = true;
         GetComponent<AudioSource>().clip = dynamite;
         GetComponent<AudioSource>().Play();
+        Instantiate(particles);
 	}
 
 	private void RandomizeDirection() {

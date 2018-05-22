@@ -8,6 +8,7 @@ public class Worm : MonoBehaviour {
 	public int amount;
 	public Sprite singleSprite;
 	public Sprite multipleWormsSprite;
+    public GameObject wormParticles;
 
     private AudioSource src;
     public AudioClip wormPickup;
@@ -28,6 +29,7 @@ public class Worm : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col) {
 		if(col.tag.Equals("Player")) {
             src.PlayOneShot(wormPickup);
+            Instantiate(wormParticles, col.transform.position, Quaternion.identity);
 			GameManager.instance.AddCurrency (amount);
 			this.gameObject.SetActive (false);
 		}
