@@ -11,7 +11,7 @@ public class Glowworm : MonoBehaviour {
 	public AudioClip audioClip;
 
 	void Start() {
-		StartGlowworm();
+		//StartGlowworm();
 	}
 
 	public void StartGlowworm() {
@@ -45,7 +45,7 @@ public class Glowworm : MonoBehaviour {
 
 	void Update() {
 		if(isRunning) {
-			UIManager.instance.AddToCurrencyText(" (* 2)");
+			//UIManager.instance.AddToCurrencyText(" (* 2)");
 		}
 
 		if(Input.GetKeyDown(KeyCode.N)) {

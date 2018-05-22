@@ -117,6 +117,65 @@ public class VectorSlerp: CodeAnimation {
     }
 
 }
+
+public class FloatLerp: CodeAnimation {
+    public float original { get; private set; }
+    public float newNumber { get; private set; }
+    public float journeyTime { get; private set; }
+    private float startTime;
+    private float currentNumber;
+    private float t;
+
+    public FloatLerp(float from, float to, float journeyTime, GameObject g) : base(g) {
+        done = false;
+        original = from;
+        newNumber = to;
+        this.journeyTime = journeyTime;
+        this.startTime = Time.time;
+        t = 0;
+        currentNumber = original;
+        //Debug.Log("KJKJK");
+    }
+
+    public override void Update() {
+        if(paused)
+            return;
+       // float fracComplete = (Time.time - startTime) / journeyTime;
+        t += (Time.time - startTime) / journeyTime;
+        //Debug.Log("ROTATING " + t);
+        currentNumber = Mathf.Lerp(original, newNumber, t);
+        
+        if(t >= 1f) {
+           // Debug.Log("DONE");
+            done = true;
+        }
+    }
+
+    public float GetProgress() {
+        return currentNumber;
+    }
+
+    public override void Reset(CodeAnimation c) {
+        FloatLerp vs = (FloatLerp) c;
+        //Debug.LogWarning("WANTS TO RESET!!! " + vs.originalVector3 + " TO: " + vs.newVector3 + " AND CHECKING IF NOT SIMILAR TO " + newVector3);
+        if(vs.newNumber == newNumber) {
+            return;
+        }
+        //Debug.LogWarning(vs.originalVector3);
+        paused = false;
+        done = false;
+       // Debug.Log("RESET: " + vs.newVector3 + " FROM: " + vs.originalVector3);
+        //originalVector3 = new Vector3(0f, 0f, transform.rotation.z);
+        original = vs.original;
+        newNumber = vs.newNumber;
+        journeyTime = vs.journeyTime;
+        startTime = Time.time;
+        t = 0;
+        currentNumber = original;
+    }
+
+}
+
 public class CodeAnimationController: MonoBehaviour {
     public static CodeAnimationController instance = null;
     private List<CodeAnimation> animations;

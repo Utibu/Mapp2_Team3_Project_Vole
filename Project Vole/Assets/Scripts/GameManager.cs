@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour {
 	public int totalScore;
 	public bool gameOver = false;
 	public float wormMultiplier = 1f;
+	public float tempWorldSpeed = 0f;
+
+	private int gameLevel = 0;
 
 	bool x = false;
 
@@ -48,6 +51,25 @@ public class GameManager : MonoBehaviour {
 			//float lastPositionX = world.transform.position.x + (chunkWidth / 2);
 			//world.transform.position = new Vector3 ((chunkWidth / 2), world.transform.position.y);
 		}*/
+		float worldMoveSpeed = this.worldMoveSpeed;
+		if(tempWorldSpeed > 0f) {
+			worldMoveSpeed = tempWorldSpeed;
+		}
+
+		if((score >= 30 && gameLevel == 0) ||(score >= 60 && gameLevel == 1) ||(score >= 100 && gameLevel == 2)) {
+			//worldMoveSpeed += 1f;
+			CodeAnimationController.instance.Add(new FloatLerp(worldMoveSpeed, worldMoveSpeed + 1, 100f, this.gameObject));
+			gameLevel ++;
+		}
+
+		CodeAnimation c = CodeAnimationController.instance.GetAnimation(this.gameObject);
+		if(c != null) {
+			worldMoveSpeed = ((FloatLerp)CodeAnimationController.instance.GetAnimation(this.gameObject)).GetProgress();
+			//Debug.Log(worldMoveSpeed);
+		}
+
+		//this.worldMoveSpeed = worldMoveSpeed;
+		
 
 		if (Input.GetKeyUp (KeyCode.X)) {
 			x = x ? false : true;
@@ -82,7 +104,12 @@ public class GameManager : MonoBehaviour {
 		score += scorePerSecond;
 	}
 
+	void SetWormScore() {
+		PlayerPrefs.SetInt ("worms", currency);
+	}
+
 	public void SetHighscore() {
+		SetWormScore();
 		totalScore = score * ((int)currency / multiplier);
 		
 		if(totalScore <= 0) {

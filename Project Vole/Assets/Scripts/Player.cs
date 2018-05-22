@@ -40,7 +40,7 @@ public class Player : MonoBehaviour {
 
 	public void ShootWorm() {
 		if (GameManager.instance.currency >= wormCost || wormIsFree) {
-			Instantiate (wormBulletPrefab, playerTransform.position, Quaternion.identity);
+			Instantiate (wormBulletPrefab, new Vector3(playerTransform.position.x + 1f, playerTransform.position.y, playerTransform.position.z), Quaternion.identity);
 			GameManager.instance.RemoveCurrency(wormCost);
 		}
 

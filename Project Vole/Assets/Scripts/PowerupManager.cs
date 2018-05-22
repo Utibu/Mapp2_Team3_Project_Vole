@@ -55,6 +55,11 @@ public class PowerupManager : MonoBehaviour {
 			triggerButton.onClick.RemoveAllListeners();
 			triggerButton.interactable = false;
 			break;
+		case "glowworm":
+			StartGlowworm ();
+			triggerButton.onClick.RemoveAllListeners();
+			triggerButton.interactable = false;
+			break;
 		default:
 			break;
 		}
@@ -66,14 +71,22 @@ public class PowerupManager : MonoBehaviour {
 		case "shake":
 			triggerButton.onClick.AddListener(() => TriggerPowerupGUI("shake"));
 			triggerButton.transform.Find("Image").GetComponent<Image>().sprite = sprites["shake"];
-			triggerButton.interactable = true;
+			break;
+		case "glowworm":
+			triggerButton.onClick.AddListener(() => TriggerPowerupGUI("glowworm"));
+			triggerButton.transform.Find("Image").GetComponent<Image>().sprite = sprites["glowworm"];
 			break;
 		default:
 			break;
 		}
+		triggerButton.interactable = true;
 	}
 
 	public void Shake(int times, Player player) {
 		GetComponent<Shake> ().StartShake (times, player);
+	}
+
+	public void StartGlowworm() {
+		GetComponent<Glowworm>().StartGlowworm();
 	}
 }
