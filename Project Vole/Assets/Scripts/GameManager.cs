@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void SetWormScore() {
-		PlayerPrefs.SetInt ("worms", currency);
+		PlayerPrefs.SetInt ("worms", currency + PlayerPrefs.GetInt("worms"));
 	}
 
 	public void SetHighscore() {
