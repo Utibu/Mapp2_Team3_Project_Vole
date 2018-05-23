@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour {
 	public float wormMultiplier = 1f;
 	public float tempWorldSpeed = 0f;
 
+	public int[] levelBreakpoints = { 30, 60, 100 };
+
 	private int gameLevel = 0;
 
 	bool x = false;
@@ -51,12 +53,18 @@ public class GameManager : MonoBehaviour {
 			//float lastPositionX = world.transform.position.x + (chunkWidth / 2);
 			//world.transform.position = new Vector3 ((chunkWidth / 2), world.transform.position.y);
 		}*/
+
+		if(levelBreakpoints.Length < 3) {
+			Debug.LogError("Levelbreakpoints has to be more than three long! Changing to default values.");
+			levelBreakpoints = new int[]{ 30, 60, 100 };
+		}
+
 		float worldMoveSpeed = this.worldMoveSpeed;
 		if(tempWorldSpeed > 0f) {
 			worldMoveSpeed = tempWorldSpeed;
 		}
 
-		if((score >= 30 && gameLevel == 0) ||(score >= 60 && gameLevel == 1) ||(score >= 100 && gameLevel == 2)) {
+		if((score >= levelBreakpoints[0] && gameLevel == 0) ||(score >= levelBreakpoints[1] && gameLevel == 1) ||(score >= levelBreakpoints[2] && gameLevel == 2)) {
 			//worldMoveSpeed += 1f;
 			CodeAnimationController.instance.Add(new FloatLerp(worldMoveSpeed, worldMoveSpeed + 1, 100f, this.gameObject));
 			gameLevel ++;

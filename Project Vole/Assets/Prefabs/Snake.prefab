@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114538001466065476}
   m_Layer: 0
   m_Name: Snake
-  m_TagString: Untagged
+  m_TagString: Snake
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allowRotation: 0
+  particles: {fileID: 0}
 --- !u!212 &212087950641075192
 SpriteRenderer:
   m_ObjectHideFlags: 1

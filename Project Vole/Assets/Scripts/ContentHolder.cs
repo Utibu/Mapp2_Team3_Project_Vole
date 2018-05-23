@@ -6,6 +6,7 @@ public class ContentHolder : MonoBehaviour {
 
 	//public int chanceToHavePowerup;
 	public PowerupTrigger[] powerupPlaceholders;
+	public GameObject snake;
 
 	// Use this for initialization
 	void Start () {
@@ -35,6 +36,15 @@ public class ContentHolder : MonoBehaviour {
 				}
 
 			}
+		}
+
+		int snakeRandom = Random.Range (0, 101);
+
+		if(GameManager.instance.score > GameManager.instance.levelBreakpoints[0] && 
+		GameManager.instance.currency > PowerupManager.instance.player.wormCost && 
+		snakeRandom <= GameManager.instance.world.GetComponent<World>().chanceToSpawnSnake) {
+			GameObject s = (GameObject)Instantiate(snake, Vector3.zero, Quaternion.identity, this.transform);
+			s.transform.localPosition = Vector3.zero;
 		}
 	}
 	

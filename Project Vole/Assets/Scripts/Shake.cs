@@ -91,6 +91,7 @@ public class Shake : MonoBehaviour {
 
 	private void ShakeFinished() {
 		GameManager.instance.world.GetComponent<World> ().HideAllObjects ("Obstacle");
+		GameManager.instance.world.GetComponent<World> ().HideAllObjects ("Snake");
 		Camera.main.transform.position = originalPosition;
 		this.player.isInvisible = false;
 	}

@@ -8,6 +8,7 @@ public class World : MonoBehaviour {
 	public List<GameObject> chunkContent = new List<GameObject> ();
 	public float chunkSize = 10f;
 	public GameObject chunkPrefab;
+	public int chanceToSpawnSnake;
 
 	private List<GameObject> chunkList = new List<GameObject> ();	
 	private int chunksToCoverScreen = 0;

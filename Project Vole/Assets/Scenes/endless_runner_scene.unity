@@ -680,13 +680,14 @@ MonoBehaviour:
   worldMoveSpeed: 3
   chunkWidth: 20
   scorePerSecond: 1
-  score: 0
+  score: 30
   highscore: 0
   multiplier: 1
   totalScore: 0
   gameOver: 0
   wormMultiplier: 1
   tempWorldSpeed: 0
+  levelBreakpoints: 1e0000003c00000064000000
 --- !u!4 &205813196
 Transform:
   m_ObjectHideFlags: 0
@@ -2164,6 +2165,7 @@ MonoBehaviour:
   chunkSize: 10
   chunkPrefab: {fileID: 1774394669780522, guid: 3cd2f3adc72444a26805c79a984dea96,
     type: 2}
+  chanceToSpawnSnake: 100
   trail: {fileID: 0}
   SpawnContent: 1
 --- !u!1 &1088795973
