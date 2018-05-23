@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Glowworm : MonoBehaviour {
+public class Glowworm : PowerupBase {
 
 	public float duration = 15f;
 	private float tempDuration;
-	public float wormMultiplier = 2;
+	public int newWormAmount = 3;
 	private bool isRunning = false;
 	public AudioClip audioClip;
 
@@ -27,6 +27,7 @@ public class Glowworm : MonoBehaviour {
 	}
 
 	void OnFinish() {
+		base.OnFinishBase();
 		CancelInvoke();
 		isRunning = false;
 		GameManager.instance.wormMultiplier = 1f;
@@ -34,6 +35,7 @@ public class Glowworm : MonoBehaviour {
 	}
 
 	void OnStart() {
+		base.OnStart(Powerup.GLOWWORM);
 		InvokeRepeating("OnEverySecond", 1f, 1f);
 		tempDuration = duration;
 		isRunning = true;

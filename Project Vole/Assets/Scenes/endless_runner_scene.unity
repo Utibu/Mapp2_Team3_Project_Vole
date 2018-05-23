@@ -698,7 +698,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &216316591
 GameObject:
@@ -738,7 +738,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &217269370
 GameObject:
@@ -2856,6 +2856,7 @@ GameObject:
   - component: {fileID: 1609675921}
   - component: {fileID: 1609675922}
   - component: {fileID: 1609675923}
+  - component: {fileID: 1609675924}
   m_Layer: 0
   m_Name: Powerups Manager
   m_TagString: Untagged
@@ -2874,11 +2875,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f49a0f6400b464515afdfe66de5ce456, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPowerup: 0
   spritesArray:
   - name: shake
     sprite: {fileID: 21300000, guid: a592ea5aa4d2146a698e63da2f7940eb, type: 3}
   - name: glowworm
     sprite: {fileID: 21300000, guid: d001ab61163214397bb00df5fb78dc19, type: 3}
+  - name: hourglass
+    sprite: {fileID: 21300000, guid: a7e8512f4d8f944d49eac22c36584b3a, type: 3}
   chanceToHavePowerup: 100
   player: {fileID: 939921257}
   triggerButton: {fileID: 1088795975}
@@ -2893,7 +2897,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1609675920
 MonoBehaviour:
@@ -2920,8 +2924,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c7f027abbbe54207bb2b4bd513c8853, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 15
-  wormMultiplier: 2
+  duration: 5
+  newWormAmount: 3
   audioClip: {fileID: 8300000, guid: 2a71df52a1a634cce82ce9ce64e4b3a5, type: 3}
 --- !u!82 &1609675922
 AudioSource:
@@ -3016,6 +3020,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 5
   toSpeed: 1.5
+--- !u!114 &1609675924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1609675917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 572056711e8719143b3a62d33d45d7cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1640568419
 Prefab:
   m_ObjectHideFlags: 0

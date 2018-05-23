@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hourglass : MonoBehaviour {
+public class Hourglass : PowerupBase {
 
 	private bool start = false;
 	public float duration = 15f;
@@ -30,6 +30,7 @@ public class Hourglass : MonoBehaviour {
 	}
 
 	void OnFinish() {
+		base.OnFinishBase();
 		Debug.Log("ONFINISH");
 		CancelInvoke();
 		isRunning = false;
@@ -37,6 +38,7 @@ public class Hourglass : MonoBehaviour {
 	}
 
 	void OnStart() {
+		base.OnStart(Powerup.HOURGLASS);
 		InvokeRepeating("OnEverySecond", 1f, 1f);
 		tempDuration = duration;
 		isRunning = true;

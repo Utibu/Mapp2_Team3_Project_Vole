@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 
+public enum Powerup { SHAKE, GLOWWORM, HOURGLASS, NONE }
 public class PowerupManager : MonoBehaviour {
 
 	[Serializable]
@@ -11,6 +12,8 @@ public class PowerupManager : MonoBehaviour {
 		public string name;
 		public Sprite sprite;
 	}
+
+	public Powerup currentPowerup;
 
 	public static PowerupManager instance;
 	public PowerupSprite[] spritesArray;
@@ -60,6 +63,11 @@ public class PowerupManager : MonoBehaviour {
 			triggerButton.onClick.RemoveAllListeners();
 			triggerButton.interactable = false;
 			break;
+		case "hourglass":
+			StartHourglass ();
+			triggerButton.onClick.RemoveAllListeners();
+			triggerButton.interactable = false;
+			break;
 		default:
 			break;
 		}
@@ -76,6 +84,10 @@ public class PowerupManager : MonoBehaviour {
 			triggerButton.onClick.AddListener(() => TriggerPowerupGUI("glowworm"));
 			triggerButton.transform.Find("Image").GetComponent<Image>().sprite = sprites["glowworm"];
 			break;
+		case "hourglass":
+			triggerButton.onClick.AddListener(() => TriggerPowerupGUI("hourglass"));
+			triggerButton.transform.Find("Image").GetComponent<Image>().sprite = sprites["hourglass"];
+			break;
 		default:
 			break;
 		}
@@ -88,5 +100,9 @@ public class PowerupManager : MonoBehaviour {
 
 	public void StartGlowworm() {
 		GetComponent<Glowworm>().StartGlowworm();
+	}
+
+	public void StartHourglass() {
+		GetComponent<Hourglass>().StartScript();
 	}
 }

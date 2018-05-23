@@ -5,6 +5,7 @@ using UnityEngine;
 public class Obstacle : MonoBehaviour {
 
 	public bool allowRotation;
+
     public GameObject particles;
 
 	void Start() {
@@ -25,7 +26,10 @@ public class Obstacle : MonoBehaviour {
 			
 		} else if(col.gameObject.tag.Equals("Projectile")) {
 
-            Instantiate(particles, col.transform.position, col.transform.rotation);
+			if(particles != null) {
+				Instantiate(particles, col.transform.position, col.transform.rotation);
+			}
+            
 			gameObject.SetActive (false);
 			col.gameObject.GetComponent<WormProjectile> ().Die ();
 		}

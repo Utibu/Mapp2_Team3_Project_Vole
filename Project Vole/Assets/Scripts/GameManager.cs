@@ -93,7 +93,12 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void AddCurrency(int increment) {
-		currency += increment;
+		if(PowerupManager.instance.currentPowerup == Powerup.GLOWWORM) {
+			currency += PowerupManager.instance.GetComponent<Glowworm>().newWormAmount;
+		} else {
+			currency += increment;
+		}
+		
 	}
 
 	public void RemoveCurrency(int toRemove) {
