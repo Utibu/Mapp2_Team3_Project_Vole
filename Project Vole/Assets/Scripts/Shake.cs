@@ -25,7 +25,7 @@ public class Shake : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		originalPosition = Camera.main.transform.position;
 	}
 	
 	// Update is called once per frame
@@ -68,7 +68,6 @@ public class Shake : MonoBehaviour {
 		this.player.isInvisible = true;
 		startTime = Time.time;
 		timesLeft = times;
-		originalPosition = Camera.main.transform.position;
 		NextShake ();
 		isRunning = true;
         GetComponent<AudioSource>().clip = dynamite;

@@ -86,12 +86,12 @@ public class PlayerInput : MonoBehaviour {
 		//Debug.Log (Input.touchCount);
 		
 
-		if ((Input.GetKey (KeyCode.Space)||(Input.touchCount == 1)  || (Input.mousePresent && Input.GetMouseButton(0))) && !EventSystem.current.IsPointerOverGameObject()) { //&& (Input.GetTouch(0).phase == TouchPhase.Stationary || Input.GetTouch(0).phase == TouchPhase.Moved))
-			if ( !EventSystem.current.IsPointerOverGameObject())
-              	rgdbd2d.velocity = Vector3.zero;
-				rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y - speedDownMovement));
-
-			
+		if ((Input.GetKey (KeyCode.Space)||
+			(Input.touchCount == 1 && !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))  || 
+			(Input.mousePresent && Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject()))) { //&& (Input.GetTouch(0).phase == TouchPhase.Stationary || Input.GetTouch(0).phase == TouchPhase.Moved))
+            
+			rgdbd2d.velocity = Vector3.zero;
+			rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y - speedDownMovement));
 
 			float rad = Mathf.Atan2 (speedDownMovement, xSpeed * Time.deltaTime);
 			float deg = Mathf.Rad2Deg * rad - 90;

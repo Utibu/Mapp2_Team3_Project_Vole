@@ -40,6 +40,12 @@ public class PowerupManager : MonoBehaviour {
 		triggerButton.gameObject.SetActive(false);
 		triggerButton.onClick.RemoveAllListeners();
 		triggerButton.interactable = false;
+
+		string chosenPowerup = PowerupBuyer.instance.GetPowerupForThisRound();
+		if(chosenPowerup != "") {
+			TriggerPowerup(chosenPowerup, player);
+		}
+
 	}
 	
 	// Update is called once per frame
@@ -75,6 +81,7 @@ public class PowerupManager : MonoBehaviour {
 
 	public void TriggerPowerup(string name, Player player) {
 		triggerButton.gameObject.SetActive(true);
+		triggerButton.onClick.RemoveAllListeners();
 		switch(name) {
 		case "shake":
 			triggerButton.onClick.AddListener(() => TriggerPowerupGUI("shake"));

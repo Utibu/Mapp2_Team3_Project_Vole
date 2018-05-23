@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour {
 	public static GameManager instance = null;
 
 	public GameObject world;
-	public float worldMoveSpeed = 1f;
+	public float originalWorldMoveSpeed = 1f;
+	public float worldMoveSpeed = 3f;
 	public float chunkWidth = 20f;
 	public int scorePerSecond;
 	public int score;
@@ -58,24 +59,25 @@ public class GameManager : MonoBehaviour {
 			Debug.LogError("Levelbreakpoints has to be more than three long! Changing to default values.");
 			levelBreakpoints = new int[]{ 30, 60, 100 };
 		}
-
-		float worldMoveSpeed = this.worldMoveSpeed;
-		if(tempWorldSpeed > 0f) {
-			worldMoveSpeed = tempWorldSpeed;
-		}
+		
 
 		if((score >= levelBreakpoints[0] && gameLevel == 0) ||(score >= levelBreakpoints[1] && gameLevel == 1) ||(score >= levelBreakpoints[2] && gameLevel == 2)) {
 			//worldMoveSpeed += 1f;
-			CodeAnimationController.instance.Add(new FloatLerp(worldMoveSpeed, worldMoveSpeed + 1, 100f, this.gameObject));
+			CodeAnimationController.instance.Add(new FloatLerp(originalWorldMoveSpeed, originalWorldMoveSpeed + 0.5f, 100f, this.gameObject));
 			gameLevel ++;
 		}
 
 		CodeAnimation c = CodeAnimationController.instance.GetAnimation(this.gameObject);
 		if(c != null) {
-			worldMoveSpeed = ((FloatLerp)CodeAnimationController.instance.GetAnimation(this.gameObject)).GetProgress();
+			originalWorldMoveSpeed = ((FloatLerp)CodeAnimationController.instance.GetAnimation(this.gameObject)).GetProgress();
 			//Debug.Log(worldMoveSpeed);
 		}
-
+		
+		if(tempWorldSpeed > 0f) {
+			worldMoveSpeed = tempWorldSpeed;
+		} else {
+			worldMoveSpeed = originalWorldMoveSpeed;
+		}
 		//this.worldMoveSpeed = worldMoveSpeed;
 		
 
@@ -118,7 +120,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void SetWormScore() {
-		PlayerPrefs.SetInt ("worms", currency + PlayerPrefs.GetInt("worms"));
+		PlayerPrefs.SetInt ("worms", currency);
 	}
 
 	public void SetHighscore() {

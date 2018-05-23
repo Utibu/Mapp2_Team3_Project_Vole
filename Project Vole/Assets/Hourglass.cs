@@ -40,20 +40,18 @@ public class Hourglass : PowerupBase {
 	void OnStart() {
 		base.OnStart(Powerup.HOURGLASS);
 		InvokeRepeating("OnEverySecond", 1f, 1f);
+		
 		tempDuration = duration;
 		isRunning = true;
 		toSpeed = 1.5f;
+		CodeAnimationController.instance.Add(new FloatLerp(GameManager.instance.worldMoveSpeed, toSpeed, 100f, this.gameObject));
 		Debug.Log("ONSTART");
 	}
 
 	// Update is called once per frame
 	void Update () {
 		if(isRunning) {
-			if(!hasAddedAnimation) {
-				CodeAnimationController.instance.Add(new FloatLerp(GameManager.instance.worldMoveSpeed, toSpeed, 100f, this.gameObject));
-				hasAddedAnimation = true;
-			}
-
+//			Debug.Log("isrunning");
 			CodeAnimation c = CodeAnimationController.instance.GetAnimation(this.gameObject);
 			if(c != null) {
 				GameManager.instance.tempWorldSpeed = ((FloatLerp)CodeAnimationController.instance.GetAnimation(this.gameObject)).GetProgress();

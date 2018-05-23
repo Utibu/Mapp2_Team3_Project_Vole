@@ -134,7 +134,6 @@ public class FloatLerp: CodeAnimation {
         this.startTime = Time.time;
         t = 0;
         currentNumber = original;
-        //Debug.Log("KJKJK");
     }
 
     public override void Update() {
@@ -158,7 +157,7 @@ public class FloatLerp: CodeAnimation {
     public override void Reset(CodeAnimation c) {
         FloatLerp vs = (FloatLerp) c;
         //Debug.LogWarning("WANTS TO RESET!!! " + vs.originalVector3 + " TO: " + vs.newVector3 + " AND CHECKING IF NOT SIMILAR TO " + newVector3);
-        if(vs.newNumber == newNumber) {
+        if(!done) {
             return;
         }
         //Debug.LogWarning(vs.originalVector3);
@@ -215,6 +214,7 @@ public class CodeAnimationController: MonoBehaviour {
        /* if(!wentOk) {
             Debug.LogWarning("ALREADY EXISTS IN CODE-ANIMATION");
         }*/
+//        Debug.LogWarning(animations.Count());
     }
 
     public CodeAnimation GetAnimation(GameObject g) {

@@ -7,12 +7,19 @@ public class ContentHolder : MonoBehaviour {
 	//public int chanceToHavePowerup;
 	public PowerupTrigger[] powerupPlaceholders;
 	public GameObject snake;
+	public List<Worm> worms = new List<Worm>();
 
 	// Use this for initialization
 	void Start () {
 
 		foreach(PowerupTrigger trigger in powerupPlaceholders) {
 			trigger.gameObject.SetActive (false);
+		}
+
+		foreach(Transform t in transform) {
+			if(t.tag.Equals("Worm")) {
+				worms.Add(t.GetComponent<Worm>());
+			}
 		}
 
 		int p = Random.Range (0, 101);
@@ -38,6 +45,7 @@ public class ContentHolder : MonoBehaviour {
 			}
 		}
 
+	
 		int snakeRandom = Random.Range (0, 101);
 
 		if(GameManager.instance.score > GameManager.instance.levelBreakpoints[0] && 
@@ -50,6 +58,15 @@ public class ContentHolder : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if(PowerupManager.instance.currentPowerup == Powerup.GLOWWORM) {
+		foreach(Worm w in worms) {
+			w.SetSprite(WormSprite.MULTIPLE);
+		}
+		} else if(worms.Count > 0 && worms[0].currentSprite == WormSprite.MULTIPLE) {
+			foreach(Worm w in worms) {
+				w.SetSprite(WormSprite.SINGLE);
+			}
+		}
+
 	}
 }

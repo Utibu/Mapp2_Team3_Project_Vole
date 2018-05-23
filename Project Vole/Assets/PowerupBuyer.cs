@@ -5,10 +5,6 @@ using UnityEngine;
 public class PowerupBuyer : MonoBehaviour {
      
 
-    private string shakeBrought;
-    private string glowwormBrought;
-    private string hourglassBrought;
-
     public static PowerupBuyer instance;
 
     private void Awake()
@@ -21,14 +17,10 @@ public class PowerupBuyer : MonoBehaviour {
     }
     // Use this for initialization
     void Start () {
-        shakeBrought = "false";
-        glowwormBrought = "false";
-        hourglassBrought = "false";
         if (PlayerPrefs.GetInt("worms") <= 10)
         {
             Deactivate();
         }
-        PlayerPrefs.SetInt("worms", PlayerPrefs.GetInt("worms") + 30);//turn this off IMPORTANT
     }
 	
 	// Update is called once per frame
@@ -37,13 +29,14 @@ public class PowerupBuyer : MonoBehaviour {
 	}
     public void Buy(string name)
     {
+        string chosenPowerup = "";
         switch (name)
         {
             case "shake":
                 if(PlayerPrefs.GetInt("worms")>= 30)
                 {
                     PlayerPrefs.SetInt("worms", PlayerPrefs.GetInt("worms") - 30);
-                    shakeBrought = "true";
+                    chosenPowerup = "shake";
                     Deactivate();
                 }
                 break;
@@ -51,7 +44,7 @@ public class PowerupBuyer : MonoBehaviour {
                 if (PlayerPrefs.GetInt("worms") >= 25)
                 {
                     PlayerPrefs.SetInt("worms", PlayerPrefs.GetInt("worms") - 25);
-                    glowwormBrought = "true";
+                    chosenPowerup = "glowworm";
                     Deactivate();
                 }
                 break;
@@ -59,40 +52,26 @@ public class PowerupBuyer : MonoBehaviour {
                 if (PlayerPrefs.GetInt("worms") >= 20)
                 {
                     PlayerPrefs.SetInt("worms", PlayerPrefs.GetInt("worms") - 20);
-                    hourglassBrought = "true";
+                    chosenPowerup = "hourglass";
                     Deactivate();
                 }
                 break;
             default:
                 break;
         }
+
+        PlayerPrefs.SetString("chosenPowerup", chosenPowerup);
     }
     
     void Deactivate()
     {
         gameObject.SetActive(false);
     }
-   public string SendShake(string power)
+   public string GetPowerupForThisRound()
     {
-        string temp = "no value";
-        if (power == "shake")
-        {
-            temp = shakeBrought;
-            shakeBrought = "false";
-            return temp;
-        }
-        else if (power == "glowworm")
-        {
-            temp = glowwormBrought;
-            glowwormBrought = "false";
-            return temp;
-        }
-        else if (power == "hourglass")
-        {
-            temp = hourglassBrought;
-            hourglassBrought = "false";
-            return temp;
-        }
-        return "false";
+        string p = PlayerPrefs.GetString("chosenPowerup");
+        //Will reset after retrieval
+        PlayerPrefs.SetString("chosenPowerup", "");
+        return p;
     }
 }

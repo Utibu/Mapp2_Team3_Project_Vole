@@ -110,9 +110,10 @@ GameObject:
   - component: {fileID: 212528377811708872}
   - component: {fileID: 114504700560723302}
   - component: {fileID: 61700932943422788}
+  - component: {fileID: 82002463763726980}
   m_Layer: 0
   m_Name: Worm
-  m_TagString: Untagged
+  m_TagString: Worm
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -420,6 +421,86 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!82 &82002463763726980
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1658027225143872}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!114 &114002459784072072
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -459,6 +540,7 @@ MonoBehaviour:
   powerupPlaceholders:
   - {fileID: 114002459784072072}
   snake: {fileID: 1140587819644574, guid: 5ef1132fb3f55fe449d8f96f53f0697c, type: 2}
+  worms: []
 --- !u!114 &114482938991126026
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -487,9 +569,10 @@ MonoBehaviour:
   singleSprite: {fileID: 21300000, guid: 74783d3a0ee8847b8a81d698ed9e6052, type: 3}
   multipleWormsSprite: {fileID: 21300000, guid: 31957563fa7ab42f0a744a317ada3b28,
     type: 3}
+  currentSprite: 0
   wormParticles: {fileID: 1239534669896078, guid: 1c808459fb1bc364698ebf46a257b204,
     type: 2}
-  wormPickup: {fileID: 0}
+  wormPickup: {fileID: 8300000, guid: a77f05224717579488a35682f1537296, type: 3}
 --- !u!114 &114648585351000374
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -16,7 +16,7 @@ public class Snake : MonoBehaviour {
     float bot = -4.5f;
     public float animationSpeed = 1f;
 
-    float speed = 5;
+    public float speed = 5;
 
 	// Use this for initialization
 	void Start () {
