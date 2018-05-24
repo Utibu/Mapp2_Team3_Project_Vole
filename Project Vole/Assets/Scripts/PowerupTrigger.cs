@@ -18,6 +18,7 @@ public class PowerupTrigger : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col) {
 		if(col.tag.Equals("Player")) {
+            AudioManager.instance.PlayGlobalOneShot("powerUp");
 			PowerupManager.instance.TriggerPowerup (powerupToTrigger, col.transform.parent.gameObject.GetComponent<Player>());
             this.gameObject.SetActive (false);
 		}
