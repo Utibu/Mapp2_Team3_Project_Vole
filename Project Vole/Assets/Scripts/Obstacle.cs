@@ -29,7 +29,7 @@ public class Obstacle : MonoBehaviour {
 			if(particles != null) {
 				Instantiate(particles, col.transform.position, col.transform.rotation);
 			}
-            
+            AudioManager.instance.PlayGlobalOneShot("rockDestruction");
 			gameObject.SetActive (false);
 			col.gameObject.GetComponent<WormProjectile> ().Die ();
 		}

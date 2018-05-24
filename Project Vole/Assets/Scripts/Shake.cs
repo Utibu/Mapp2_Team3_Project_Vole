@@ -70,8 +70,10 @@ public class Shake : MonoBehaviour {
 		timesLeft = times;
 		NextShake ();
 		isRunning = true;
-        GetComponent<AudioSource>().clip = dynamite;
-        GetComponent<AudioSource>().Play();
+        //GetComponent<AudioSource>().clip = dynamite;
+        //GetComponent<AudioSource>().Play();
+		//AudioManager.instance.Play(gameObject, dynamite, false, false);
+		AudioManager.instance.PlayOneShot(gameObject, dynamite);
         Instantiate(particles);
 	}
 

@@ -15,13 +15,11 @@ public class Player : MonoBehaviour {
 	public bool isInvisible;
 
 	public Button wormButton;
-
-    private AudioSource source;
+	
     public AudioClip shootSound;
 
 	// Use this for initialization
 	void Start () {
-        source = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -43,7 +41,7 @@ public class Player : MonoBehaviour {
 
 	public void ShootWorm() {
 		if (GameManager.instance.currency >= wormCost || wormIsFree) {
-            source.PlayOneShot(shootSound);
+            AudioManager.instance.PlayOneShot(gameObject, shootSound);
 			Instantiate (wormBulletPrefab, new Vector3(playerTransform.position.x + 1f, playerTransform.position.y, playerTransform.position.z), Quaternion.identity);
 			GameManager.instance.RemoveCurrency(wormCost);
 		}

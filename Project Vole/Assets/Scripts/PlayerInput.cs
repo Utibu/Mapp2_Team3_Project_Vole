@@ -84,7 +84,6 @@ public class PlayerInput : MonoBehaviour {
 		float rotation = transform.parent.rotation.z;
 
 		//Debug.Log (Input.touchCount);
-		
 
 		if ((Input.GetKey (KeyCode.Space)||
 			(Input.touchCount == 1 && !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))  || 

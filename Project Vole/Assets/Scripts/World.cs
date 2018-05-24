@@ -26,8 +26,6 @@ public class World : MonoBehaviour {
 		chunkList = sortedChunkList;*/
 
 		chunksToCoverScreen = Mathf.CeilToInt(CameraManager.instance.GetCameraSize ().x / chunkSize) + 2;
-		Debug.Log (CameraManager.instance.GetCameraSize ().x + "    " + chunkSize);
-		Debug.Log (chunksToCoverScreen);
 
 		for(int i = 0; i < chunksToCoverScreen; i++) {
 			GameObject g = (GameObject)Instantiate (chunkPrefab, transform);

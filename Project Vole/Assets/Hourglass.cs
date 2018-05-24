@@ -31,7 +31,6 @@ public class Hourglass : PowerupBase {
 
 	void OnFinish() {
 		base.OnFinishBase();
-		Debug.Log("ONFINISH");
 		CancelInvoke();
 		isRunning = false;
 		GameManager.instance.tempWorldSpeed = 0f;
@@ -45,7 +44,6 @@ public class Hourglass : PowerupBase {
 		isRunning = true;
 		toSpeed = 1.5f;
 		CodeAnimationController.instance.Add(new FloatLerp(GameManager.instance.worldMoveSpeed, toSpeed, 100f, this.gameObject));
-		Debug.Log("ONSTART");
 	}
 
 	// Update is called once per frame

@@ -11,11 +11,7 @@ public class Worm : MonoBehaviour {
 	public WormSprite currentSprite;
     public GameObject wormParticles;
 
-    private AudioSource src;
-    public AudioClip wormPickup;
-
 	void Start() {
-        src = GetComponent<AudioSource>();
 		this.GetComponent<SpriteRenderer>().sprite = singleSprite;
 		currentSprite = WormSprite.SINGLE;
 		amount = 1;
@@ -34,7 +30,7 @@ public class Worm : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D col) {
 		if(col.tag.Equals("Player")) {
-            src.PlayOneShot(wormPickup);
+            AudioManager.instance.PlayGlobalOneShot("wormPickup");
             GameObject g = (GameObject)Instantiate(wormParticles, col.transform.position, Quaternion.identity);
 			g.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
 			GameManager.instance.AddCurrency (amount);

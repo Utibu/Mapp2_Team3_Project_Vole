@@ -31,7 +31,7 @@ public class Glowworm : PowerupBase {
 		CancelInvoke();
 		isRunning = false;
 		GameManager.instance.wormMultiplier = 1f;
-		GetComponent<AudioSource>().Stop();
+		AudioManager.instance.Stop(gameObject);
 	}
 
 	void OnStart() {
@@ -41,8 +41,7 @@ public class Glowworm : PowerupBase {
 		isRunning = true;
 		GameManager.instance.wormMultiplier = 2f;
 		Debug.Log("ONSTART");
-		GetComponent<AudioSource>().clip = audioClip;
-		GetComponent<AudioSource>().Play();
+		AudioManager.instance.Play(gameObject, audioClip, false, true);
 	}
 
 	void Update() {

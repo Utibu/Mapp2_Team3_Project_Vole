@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour {
 	void Start() {
 		InvokeRepeating ("AddScore", 1, 1);
 		highscore = PlayerPrefs.GetInt ("highscore");
-		Debug.Log(highscore);
+		AudioManager.instance.SetCorrectVolume(gameObject, true);
 	}
 
 	void Update() {
