@@ -71,6 +71,7 @@ public class PlayerInput : MonoBehaviour {
 		//if(transform.parent.rotation.z != 0f)
 			//Rotate(0f);
 		//Debug.Log(transform.rotation.eulerAngles.z + " PARENT");
+		//Debug.Log(message);
 		//Debug.Log(transform.parent.rotation.eulerAngles.z + " PARENT");
 		CodeAnimation c = new VectorSlerp(new Vector3(0f, 0f, transform.parent.rotation.eulerAngles.z), new Vector3 (0f, 0f, deg), rotationSpeed, transform, VectorType.ROTATE);
 		//Debug.Log(message + ", " + deg + " --- " + new Vector3(0f, 0f, transform.parent.rotation.eulerAngles.z) + " --- " + (new Vector3 (0f, 0f, deg)));
@@ -84,35 +85,41 @@ public class PlayerInput : MonoBehaviour {
 		float rotation = transform.parent.rotation.z;
 
 		//Debug.Log (Input.touchCount);
+		//Debug.Log(Input.mousePresent + "   " + Input.GetMouseButton(0) + "   " + EventSystem.current.IsPointerOverGameObject());
 
-		if ((Input.GetKey (KeyCode.Space)||
+		/*if ((Input.GetKey (KeyCode.Space)||
 			(Input.touchCount == 1 && !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))  || 
-			(Input.mousePresent && Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject()))) { //&& (Input.GetTouch(0).phase == TouchPhase.Stationary || Input.GetTouch(0).phase == TouchPhase.Moved))
-            
-			rgdbd2d.velocity = Vector3.zero;
-			rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y - speedDownMovement));
-
-			float rad = Mathf.Atan2 (speedDownMovement, xSpeed * Time.deltaTime);
-			float deg = Mathf.Rad2Deg * rad - 90;
-
-			distance = Mathf.Cos((Mathf.PI / 2) - rad) * (originalSpriteWidth / 2);
-			//Debug.Log(distance);
-
-			if(!isTouchingBottom()) {
-				Rotate(deg);
-				//Debug.Log("rotate_deg_down");
-				isRotated = true;
-			} else {
-				Rotate(0f, "b");
-				rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y));
-				isRotated = false;
-			}
-		}
-        else if (Input.GetKey(KeyCode.B)|| Input.touchCount > 1 || (Input.GetMouseButton(0) && Input.GetMouseButton(1)))
+			(Input.mousePresent && Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject()))) {*/ //&& (Input.GetTouch(0).phase == TouchPhase.Stationary || Input.GetTouch(0).phase == TouchPhase.Moved))
+        
+        if (Input.GetKey(KeyCode.B)|| Input.touchCount > 1 || (Input.GetMouseButton(0) && Input.GetMouseButton(1)))
         {
             Rotate(0f, "dd");
 			isRotated = false;
         }
+		else if((Input.GetKey (KeyCode.Space)||
+			(Input.touchCount == 1 && !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))  || 
+			(Input.mousePresent && Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject()))) { //&& (Input.GetTouch(0).phase == TouchPhase.Stationary || Input.GetTouch(0).phase == TouchPhase.Moved)) {
+			
+				rgdbd2d.velocity = Vector3.zero;
+				rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y - speedDownMovement));
+
+				float rad = Mathf.Atan2 (speedDownMovement, xSpeed * Time.deltaTime);
+				float deg = Mathf.Rad2Deg * rad - 90;
+
+				distance = Mathf.Cos((Mathf.PI / 2) - rad) * (originalSpriteWidth / 2);
+				//Debug.Log(distance);
+
+				if(!isTouchingBottom()) {
+					Rotate(deg, "l");
+					//Debug.Log("rotate_deg_down");
+					isRotated = true;
+				} else {
+					Rotate(0f, "b");
+					rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y));
+					isRotated = false;
+				}
+			
+		}
 		else
 		{
 			rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y + speedUpMovement));
@@ -122,7 +129,7 @@ public class PlayerInput : MonoBehaviour {
 			distance = Mathf.Cos((Mathf.PI / 2) - rad) * (originalSpriteWidth / 2);
 
 			if(!isTouchingTop()) {
-				Rotate(deg);
+				Rotate(deg, "k");
 				//Debug.Log("rotate_deg_up");
 				isRotated = true;
 			} else {

@@ -15,7 +15,7 @@ public class Player : MonoBehaviour {
 	public bool isInvisible;
 
 	public Button wormButton;
-	
+
     public AudioClip shootSound;
 
 	// Use this for initialization
@@ -42,7 +42,8 @@ public class Player : MonoBehaviour {
 	public void ShootWorm() {
 		if (GameManager.instance.currency >= wormCost || wormIsFree) {
             AudioManager.instance.PlayOneShot(gameObject, shootSound);
-			Instantiate (wormBulletPrefab, new Vector3(playerTransform.position.x + 1f, playerTransform.position.y, playerTransform.position.z), Quaternion.identity);
+			GameObject g = (GameObject)Instantiate (wormBulletPrefab, new Vector3(playerTransform.position.x + 1f, playerTransform.position.y, playerTransform.position.z), Quaternion.identity);
+			Physics2D.IgnoreCollision(g.GetComponent<Collider2D>(), playerTransform.GetComponent<Collider2D>());
 			GameManager.instance.RemoveCurrency(wormCost);
 		}
 

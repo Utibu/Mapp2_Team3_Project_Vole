@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour {
 	private int gameLevel = 0;
 
 	bool x = false;
+	private bool firstFrame = true;
 
 	void Awake() {
 		Application.targetFrameRate = 60;
@@ -45,10 +46,13 @@ public class GameManager : MonoBehaviour {
 	void Start() {
 		InvokeRepeating ("AddScore", 1, 1);
 		highscore = PlayerPrefs.GetInt ("highscore");
-		AudioManager.instance.SetCorrectVolume(gameObject, true);
 	}
 
 	void Update() {
+		if(firstFrame) {
+			AudioManager.instance.SetCorrectVolume(gameObject, true);
+			firstFrame = false;
+		}
 		/*world.transform.position += Vector3.left * worldMoveSpeed * Time.deltaTime;
 		if (world.transform.position.x + (chunkWidth / 2) < 0f) {
 			//float lastPositionX = world.transform.position.x + (chunkWidth / 2);

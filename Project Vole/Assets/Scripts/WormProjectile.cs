@@ -29,4 +29,10 @@ public class WormProjectile : MonoBehaviour {
 	public void Die() {
 		Destroy (this.gameObject);
 	}
+
+	/*public void OnCollisionEnter(Collision2D col) {
+		if(col.gameObject.tag.Equals("Player")) {
+			Physics2D.IgnoreCollision(col.collider, this.GetComponent<Collider2D>());
+		}
+	}*/
 }
