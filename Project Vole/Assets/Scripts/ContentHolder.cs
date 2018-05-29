@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class ContentHolder : MonoBehaviour {
 
-	//public int chanceToHavePowerup;
 	public PowerupTrigger[] powerupPlaceholders;
 	public GameObject snake;
 	public List<Worm> worms = new List<Worm>();
 
-	// Use this for initialization
 	void Start () {
 
 		foreach(PowerupTrigger trigger in powerupPlaceholders) {
@@ -24,10 +22,15 @@ public class ContentHolder : MonoBehaviour {
 
 		int p = Random.Range (0, 101);
 
+		//Check if this chunk has been chosen to have a powerup
 		if(p <= PowerupManager.instance.chanceToHavePowerup) {
 			if(powerupPlaceholders.Length > 0) {
+
+				//Choose a random powerup-position to activate
 				int rand = Random.Range (0, powerupPlaceholders.Length);
 				powerupPlaceholders [rand].gameObject.SetActive (true);
+
+				//Fill the powerup placeholder with a powerup
 				if(PowerupManager.instance.sprites.Count > 0) {
 					string powerupName = "";
 					int i = 0;
@@ -48,6 +51,8 @@ public class ContentHolder : MonoBehaviour {
 	
 		int snakeRandom = Random.Range (0, 101);
 
+		//Spawn a snake if the player is over a certain points, has enough worms to kill it and 
+		//it has randomized a good number
 		if(GameManager.instance.score > GameManager.instance.levelBreakpoints[0] && 
 		GameManager.instance.currency > PowerupManager.instance.player.wormCost && 
 		snakeRandom <= GameManager.instance.world.GetComponent<World>().chanceToSpawnSnake) {
@@ -58,6 +63,7 @@ public class ContentHolder : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		//Set the sprites
 		if(PowerupManager.instance.currentPowerup == Powerup.GLOWWORM) {
 		foreach(Worm w in worms) {
 			w.SetSprite(WormSprite.MULTIPLE);

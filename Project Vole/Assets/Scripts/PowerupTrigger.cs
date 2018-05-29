@@ -8,7 +8,6 @@ public class PowerupTrigger : MonoBehaviour {
 
 	public void SetPowerup(string p) {
 		powerupToTrigger = p;
-//		Debug.Log(PowerupManager.instance.sprites [p]);
 		GetComponent<SpriteRenderer> ().sprite = PowerupManager.instance.sprites [p];
 	}
 

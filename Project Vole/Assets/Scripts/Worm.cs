@@ -30,9 +30,11 @@ public class Worm : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D col) {
 		if(col.tag.Equals("Player")) {
+			//Particles
             AudioManager.instance.PlayGlobalOneShot("wormPickup");
-            GameObject g = (GameObject)Instantiate(wormParticles, col.transform.position, Quaternion.identity);
-			g.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
+            GameObject particles = (GameObject)Instantiate(wormParticles, col.transform.position, Quaternion.identity);
+			particles.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
+
 			GameManager.instance.AddCurrency (amount);
 			this.gameObject.SetActive (false);
 		}

@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour {
 	public int score;
 	public int highscore;
 
-	public int currency { get; protected set; }
+	public int currency;
 	public int multiplier;
 	public int totalScore;
 	public bool gameOver = false;
@@ -46,6 +46,12 @@ public class GameManager : MonoBehaviour {
 	void Start() {
 		InvokeRepeating ("AddScore", 1, 1);
 		highscore = PlayerPrefs.GetInt ("highscore");
+
+		if(PlayerPrefs.GetInt("hasRunBefore") == 0) {
+			PlayerPrefs.SetInt("hasRunBefore", 1);
+			PlayerPrefs.SetFloat("musicVolume", 0.5f);
+			PlayerPrefs.SetFloat("soundFxVolume", 1f);
+		}
 	}
 
 	void Update() {
@@ -53,28 +59,22 @@ public class GameManager : MonoBehaviour {
 			AudioManager.instance.SetCorrectVolume(gameObject, true);
 			firstFrame = false;
 		}
-		/*world.transform.position += Vector3.left * worldMoveSpeed * Time.deltaTime;
-		if (world.transform.position.x + (chunkWidth / 2) < 0f) {
-			//float lastPositionX = world.transform.position.x + (chunkWidth / 2);
-			//world.transform.position = new Vector3 ((chunkWidth / 2), world.transform.position.y);
-		}*/
 
 		if(levelBreakpoints.Length < 3) {
 			Debug.LogError("Levelbreakpoints has to be more than three long! Changing to default values.");
 			levelBreakpoints = new int[]{ 30, 60, 100 };
 		}
 		
-
+		//Increase speed
 		if((score >= levelBreakpoints[0] && gameLevel == 0) ||(score >= levelBreakpoints[1] && gameLevel == 1) ||(score >= levelBreakpoints[2] && gameLevel == 2)) {
-			//worldMoveSpeed += 1f;
 			CodeAnimationController.instance.Add(new FloatLerp(originalWorldMoveSpeed, originalWorldMoveSpeed + 0.5f, 100f, this.gameObject));
 			gameLevel ++;
 		}
 
+		//Animate the speed increase 
 		CodeAnimation c = CodeAnimationController.instance.GetAnimation(this.gameObject);
 		if(c != null) {
 			originalWorldMoveSpeed = ((FloatLerp)CodeAnimationController.instance.GetAnimation(this.gameObject)).GetProgress();
-			//Debug.Log(worldMoveSpeed);
 		}
 		
 		if(tempWorldSpeed > 0f) {
@@ -82,28 +82,12 @@ public class GameManager : MonoBehaviour {
 		} else {
 			worldMoveSpeed = originalWorldMoveSpeed;
 		}
-		//this.worldMoveSpeed = worldMoveSpeed;
-		
-
-		if (Input.GetKeyUp (KeyCode.X)) {
-			x = x ? false : true;
-			Debug.Log ("ÄNDRAT!!! x = " + x); 
-		}
 
 		if(!gameOver) {
 			UIManager.instance.OnGameRunning("Score: " + score, "Highscore: " + highscore, "Worms: " + currency);
 		}
-		
-		if(x) {
-			world.transform.position += Vector3.left * worldMoveSpeed * Time.deltaTime;
-		} else {
-			world.GetComponent<World> ().MoveWorld (worldMoveSpeed);
-		}
-	}
 
-	void FixedUpdate() {
-		//world.GetComponent<World> ().MoveWorld ();
-
+		world.GetComponent<World> ().MoveWorld (worldMoveSpeed);
 	}
 
 	public void AddCurrency(int increment) {

@@ -34,14 +34,14 @@ public class Shake : MonoBehaviour {
 			float coveredDistance = (Time.time - startTime) * speed;
 			float frac = coveredDistance / journeyLength;
 			Camera.main.transform.position = Vector3.Lerp(originalPosition, usePosition, frac);
-			if(frac >= 1) {
+			if(frac >= 1) { //Shake is completed
 				frac = 0;
 				startTime = Time.time;
-				if(i == 1) {
+				if(i == 1) { //First shake completed, do it again but mirrored
 					i++;
 					usePosition = newPositionMirrored;
 					journeyLength = Vector3.Distance(originalPosition, usePosition);
-				} else if(i == 2) {
+				} else if(i == 2) { //Shake again if theres shakes left to do, otherwise end the shake
 					if(timesLeft > 0) {
 						NextShake ();
 					} else {
@@ -70,9 +70,6 @@ public class Shake : MonoBehaviour {
 		timesLeft = times;
 		NextShake ();
 		isRunning = true;
-        //GetComponent<AudioSource>().clip = dynamite;
-        //GetComponent<AudioSource>().Play();
-		//AudioManager.instance.Play(gameObject, dynamite, false, false);
 		AudioManager.instance.PlayOneShot(gameObject, dynamite);
         Instantiate(particles);
 	}

@@ -15,8 +15,6 @@ public class WormProjectile : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-
 		if(rb2d.position.x + GetComponent<SpriteRenderer>().bounds.size.x / 2 + 1f > CameraManager.instance.GetCameraSize().x) {
 			Die ();
 		}
@@ -29,10 +27,4 @@ public class WormProjectile : MonoBehaviour {
 	public void Die() {
 		Destroy (this.gameObject);
 	}
-
-	/*public void OnCollisionEnter(Collision2D col) {
-		if(col.gameObject.tag.Equals("Player")) {
-			Physics2D.IgnoreCollision(col.collider, this.GetComponent<Collider2D>());
-		}
-	}*/
 }

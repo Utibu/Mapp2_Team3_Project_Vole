@@ -23,17 +23,4 @@ public class MenuManager : MonoBehaviour {
     public void LoadLevel(string scenename) {
         SceneManager.LoadScene(scenename);
     }
-
-    public void StartGame(string scenename)
-    {
-        SceneManager.LoadScene(scenename);
-    }
-    public void RestartGame(string scenename)
-    {
-        SceneManager.LoadScene(scenename);
-    }
-    public void ReturnMenu(string scenename)
-    {
-        SceneManager.LoadScene(scenename);
-    }
 }

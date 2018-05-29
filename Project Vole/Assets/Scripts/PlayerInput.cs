@@ -13,17 +13,7 @@ public class PlayerInput : MonoBehaviour {
 
 	private float distance;
 	private float originalSpriteWidth;
-	private float distanceToBottom;
-	private bool hasGeneratedTrailRecently;
-
-    private bool downMovement;
     private Rigidbody2D rgdbd2d;
-	private float lastTrailSpawn;
-	private bool trailIsBig = false;
-
-	private float lastPress;
-	private bool fastPress = false;
-	public float fastPressLimitInSeconds;
 	private bool isRotated = false;
 
 	public Trail trail;
@@ -32,23 +22,18 @@ public class PlayerInput : MonoBehaviour {
     void Start(){
 		distance = GetComponent<Collider2D> ().bounds.extents.y;
 		rgdbd2d = transform.parent.GetComponent<Rigidbody2D>();
-		lastTrailSpawn = Time.time;
-		lastPress = Time.time - 1f;
 		originalSpriteWidth = GetComponent<SpriteRenderer>().bounds.size.x;
     }
 
 	bool isTouchingTop() {
-		
 		RaycastHit2D[] hitsAbove = Physics2D.RaycastAll (rgdbd2d.position, new Vector2(0, 1), distance + 0.05f);
 		Debug.DrawRay(rgdbd2d.position, new Vector2(0, distance + 0.05f), Color.blue);
 
 		foreach(RaycastHit2D hit in hitsAbove) {
 			if(hit.collider.tag.Equals("Ground")) {
-				//Debug.Log("IS TOUCHING TOP");
 				return true;
 			}
 		}
-
 		return false;
 	}
 
@@ -60,21 +45,11 @@ public class PlayerInput : MonoBehaviour {
 				return true;
 			}
 		}
-
 		return false;
 	}
 
-	// Update is called once per frame
-
-	private void Rotate(float deg, string message = "") {
-		//transform.parent.rotation = Quaternion.Euler (new Vector3 (0f, 0f, deg));
-		//if(transform.parent.rotation.z != 0f)
-			//Rotate(0f);
-		//Debug.Log(transform.rotation.eulerAngles.z + " PARENT");
-		//Debug.Log(message);
-		//Debug.Log(transform.parent.rotation.eulerAngles.z + " PARENT");
+	private void Rotate(float deg) {
 		CodeAnimation c = new VectorSlerp(new Vector3(0f, 0f, transform.parent.rotation.eulerAngles.z), new Vector3 (0f, 0f, deg), rotationSpeed, transform, VectorType.ROTATE);
-		//Debug.Log(message + ", " + deg + " --- " + new Vector3(0f, 0f, transform.parent.rotation.eulerAngles.z) + " --- " + (new Vector3 (0f, 0f, deg)));
 		CodeAnimationController.instance.Add(c);
 	}
 
@@ -83,62 +58,59 @@ public class PlayerInput : MonoBehaviour {
 		//Rotation
 		float xSpeed = GameManager.instance.worldMoveSpeed;
 		float rotation = transform.parent.rotation.z;
-
-		//Debug.Log (Input.touchCount);
-		//Debug.Log(Input.mousePresent + "   " + Input.GetMouseButton(0) + "   " + EventSystem.current.IsPointerOverGameObject());
-
-		/*if ((Input.GetKey (KeyCode.Space)||
-			(Input.touchCount == 1 && !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))  || 
-			(Input.mousePresent && Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject()))) {*/ //&& (Input.GetTouch(0).phase == TouchPhase.Stationary || Input.GetTouch(0).phase == TouchPhase.Moved))
         
+		//Multiple touches, move straight, nothing in the y axis
         if (Input.GetKey(KeyCode.B)|| Input.touchCount > 1 || (Input.GetMouseButton(0) && Input.GetMouseButton(1)))
         {
-            Rotate(0f, "dd");
+            Rotate(0f);
 			isRotated = false;
-        }
+        } //The player is pressing down and should go up and rotate up
 		else if((Input.GetKey (KeyCode.Space)||
 			(Input.touchCount == 1 && !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))  || 
-			(Input.mousePresent && Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject()))) { //&& (Input.GetTouch(0).phase == TouchPhase.Stationary || Input.GetTouch(0).phase == TouchPhase.Moved)) {
+			(Input.mousePresent && Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject()))) {
 			
 				rgdbd2d.velocity = Vector3.zero;
-				rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y - speedDownMovement));
+				rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y + speedDownMovement));
 
-				float rad = Mathf.Atan2 (speedDownMovement, xSpeed * Time.deltaTime);
-				float deg = Mathf.Rad2Deg * rad - 90;
+				//Calculate the rotation
+				float rad = Mathf.Atan2 (speedUpMovement, xSpeed * Time.deltaTime);
+				float deg = Mathf.Rad2Deg * rad;
 
+				//Get the height when the player is rotated
 				distance = Mathf.Cos((Mathf.PI / 2) - rad) * (originalSpriteWidth / 2);
-				//Debug.Log(distance);
 
-				if(!isTouchingBottom()) {
-					Rotate(deg, "l");
-					//Debug.Log("rotate_deg_down");
+				if(!isTouchingTop()) {
+					Rotate(deg);
 					isRotated = true;
 				} else {
-					Rotate(0f, "b");
+					Rotate(0f);
 					rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y));
 					isRotated = false;
 				}
 			
 		}
-		else
+		else //Player is not pressing down and the "gravity" should take over, pulling the character down
 		{
-			rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y + speedUpMovement));
-			float rad = Mathf.Atan2 (speedUpMovement, xSpeed * Time.deltaTime);
-			float deg = Mathf.Rad2Deg * rad;
+			rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y - speedUpMovement));
+
+			//Calculate the rotation
+			float rad = Mathf.Atan2 (speedDownMovement, xSpeed * Time.deltaTime);
+			float deg = Mathf.Rad2Deg * rad - 90;
 			
+			//Get the height when the player is rotated
 			distance = Mathf.Cos((Mathf.PI / 2) - rad) * (originalSpriteWidth / 2);
 
-			if(!isTouchingTop()) {
-				Rotate(deg, "k");
-				//Debug.Log("rotate_deg_up");
+			if(!isTouchingBottom()) {
+				Rotate(deg);
 				isRotated = true;
 			} else {
-				Rotate(0f, "t");
+				Rotate(0f);
 				rgdbd2d.MovePosition (new Vector2 (0, rgdbd2d.position.y));
 				isRotated = false;
 			}
 		}
 
+		//Rotate slowly with an animation
 		CodeAnimation c = CodeAnimationController.instance.GetAnimation(this.gameObject);
 		Vector3 rot;
 		if(c != null && c is VectorSlerp) {
@@ -152,14 +124,10 @@ public class PlayerInput : MonoBehaviour {
 		}
 
 		float currentDistance= Mathf.Cos((Mathf.PI / 2) - (Mathf.Deg2Rad * rot.z)) * (originalSpriteWidth / 2);
-//		Debug.Log(rot);
 		
 		trail.OnUpdate(new Vector3(rgdbd2d.position.x, rgdbd2d.position.y, 0f), isRotated, currentDistance);
 
-		if(Input.GetKeyDown(KeyCode.L)) {
-			player.Die();
-		}
-
+		//Change speed for the walking-animation if the player is rotated
 		if(isRotated) {
 			GetComponent<Animator>().speed = animationSpeedClimbing;
 		} else {
@@ -167,15 +135,4 @@ public class PlayerInput : MonoBehaviour {
 		}
 
 	}
-
-	void Update () {
-    
-
-
-		if(Input.GetKeyDown(KeyCode.Return)) {
-			player.ShootWorm ();
-		}
-
-     
-    }
 }

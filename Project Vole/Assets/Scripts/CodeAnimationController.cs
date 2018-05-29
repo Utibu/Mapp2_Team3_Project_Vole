@@ -47,15 +47,12 @@ public class VectorSlerp: CodeAnimation {
         this.type = type;
         t = 0;
         currentVector = originalVector3;
-        //Debug.Log("KJKJK");
     }
 
     public override void Update() {
         if(paused)
             return;
-       // float fracComplete = (Time.time - startTime) / journeyTime;
         t += (Time.time - startTime) / journeyTime;
-        //Debug.Log("ROTATING " + t);
         if(type == VectorType.ROTATE) {
             float v = Mathf.LerpAngle(originalVector3.z, newVector3.z, t);
             currentVector = new Vector3(0f, 0f, v);
@@ -64,7 +61,6 @@ public class VectorSlerp: CodeAnimation {
         }
         
         if(t >= 1f) {
-           // Debug.Log("DONE");
             done = true;
         }
 
@@ -77,15 +73,11 @@ public class VectorSlerp: CodeAnimation {
 
     public override void Reset(CodeAnimation c) {
         VectorSlerp vs = (VectorSlerp) c;
-        //Debug.LogWarning("WANTS TO RESET!!! " + vs.originalVector3 + " TO: " + vs.newVector3 + " AND CHECKING IF NOT SIMILAR TO " + newVector3);
         if(newVector3 == null || vs.newVector3 == newVector3) {
             return;
         }
-        //Debug.LogWarning(vs.originalVector3);
         paused = false;
         done = false;
-       // Debug.Log("RESET: " + vs.newVector3 + " FROM: " + vs.originalVector3);
-        //originalVector3 = new Vector3(0f, 0f, transform.rotation.z);
         originalVector3 = vs.originalVector3;
         newVector3 = vs.newVector3;
         journeyTime = vs.journeyTime;
@@ -139,13 +131,10 @@ public class FloatLerp: CodeAnimation {
     public override void Update() {
         if(paused)
             return;
-       // float fracComplete = (Time.time - startTime) / journeyTime;
         t += (Time.time - startTime) / journeyTime;
-        //Debug.Log("ROTATING " + t);
         currentNumber = Mathf.Lerp(original, newNumber, t);
         
         if(t >= 1f) {
-           // Debug.Log("DONE");
             done = true;
         }
     }
@@ -156,15 +145,11 @@ public class FloatLerp: CodeAnimation {
 
     public override void Reset(CodeAnimation c) {
         FloatLerp vs = (FloatLerp) c;
-        //Debug.LogWarning("WANTS TO RESET!!! " + vs.originalVector3 + " TO: " + vs.newVector3 + " AND CHECKING IF NOT SIMILAR TO " + newVector3);
         if(!done) {
             return;
         }
-        //Debug.LogWarning(vs.originalVector3);
         paused = false;
         done = false;
-       // Debug.Log("RESET: " + vs.newVector3 + " FROM: " + vs.originalVector3);
-        //originalVector3 = new Vector3(0f, 0f, transform.rotation.z);
         original = vs.original;
         newNumber = vs.newNumber;
         journeyTime = vs.journeyTime;
@@ -192,16 +177,13 @@ public class CodeAnimationController: MonoBehaviour {
     }
 
     public void Add(CodeAnimation anim) {
-        //if(!animations.Contains((c => c == ))) {
-            
-       // }
-
        bool found = false;
 
+        //If someone tries to add a new animation of a gameobject that already has an animation, 
+        //call it's reset method which will evaluate if it should reset instead of always adding 
+        //or removing objects from the list
        foreach(CodeAnimation a in animations) {
            if(a.g == anim.g) {
-               //Debug.Log("dfgffgfg");
-               //Debug.LogError(((VectorSlerp)anim).newVector3);
                a.Reset(anim);
                found = true;
                break;
@@ -210,19 +192,12 @@ public class CodeAnimationController: MonoBehaviour {
 
         if(!found)
             animations.Add(anim);
-       
-       /* if(!wentOk) {
-            Debug.LogWarning("ALREADY EXISTS IN CODE-ANIMATION");
-        }*/
-//        Debug.LogWarning(animations.Count());
     }
 
     public CodeAnimation GetAnimation(GameObject g) {
         bool found = false;
         foreach(CodeAnimation a in animations) {
            if(a.g == g) {
-               //Debug.Log("dfgffgfg");
-               //Debug.LogError(((VectorSlerp)anim).newVector3);
                return a;
            }
        }
@@ -232,7 +207,6 @@ public class CodeAnimationController: MonoBehaviour {
     }
 
     public void Update() {
-        //Debug.Log(animations.Count);
         foreach(CodeAnimation anim in animations) {
             anim.Update();
             if(anim.done) {

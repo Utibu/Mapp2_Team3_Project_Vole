@@ -17,25 +17,20 @@ public class World : MonoBehaviour {
 
 	public bool SpawnContent = true;
 
-	// Use this for initialization
 	void Start () {
-		/*GameObject[] chunckObjects = GameObject.FindGameObjectsWithTag ("Chunk");
-		List<GameObject> tempChunks = new List<GameObject> (chunckObjects);
-
-		List<GameObject> sortedChunkList = tempChunks.OrderBy(c=>c.transform.position.x).ToList();
-		chunkList = sortedChunkList;*/
-
+		//Calculate how many chunks is required to fill the screen and to give some space for a seamless rendering
 		chunksToCoverScreen = Mathf.CeilToInt(CameraManager.instance.GetCameraSize ().x / chunkSize) + 2;
 
+		//Instantiate the chunks
 		for(int i = 0; i < chunksToCoverScreen; i++) {
 			GameObject g = (GameObject)Instantiate (chunkPrefab, transform);
-			g.GetComponent<Chunk> ().SetSize (chunkSize);
 			g.transform.position = new Vector3 (-(CameraManager.instance.GetCameraSize ().x / 2) - 1f + (chunkSize * i), g.transform.position.y);
 			chunkList.Add (g);
 		}
 
 	}
 
+	//Get a random index for the content-list
 	private GameObject RequestContent() {
 		if (chunkList.Count <= 0)
 			return null;
@@ -44,9 +39,9 @@ public class World : MonoBehaviour {
 		return chunkContent [randomIndex];
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		GameObject firstChunk = chunkList [0];
+		//Transfer a chunk to the other side of the camera after it has gone outside of the camera view and a bit more further
 		if (firstChunk.transform.position.x + (chunkSize / 2) < -(CameraManager.instance.GetCameraSize ().x / 2) - 1f) {
 			GameObject c = chunkList [0];
 			chunkList.RemoveAt (0);
@@ -61,19 +56,6 @@ public class World : MonoBehaviour {
 
 	public void MoveWorld(float worldMoveSpeed) {
 		transform.position += Vector3.left * worldMoveSpeed * Time.deltaTime;
-		foreach(GameObject g in chunkList) {
-			/*Rigidbody2D rb2d = g.GetComponent<Rigidbody2D> ();
-			g.GetComponent<Rigidbody2D>().MovePosition (rb2d.position + (Vector2.left * GameManager.instance.worldMoveSpeed * Time.deltaTime));
-			*/
-			//g.transform.position += Vector3.left * GameManager.instance.worldMoveSpeed * Time.deltaTime;
-		}
-
-/*		Vector3[] positions = new Vector3[trail.positionCount];
-		trail.GetPositions (positions);
-		for(int i = 0; i < positions.Length; i++) {
-			positions [i] = new Vector3 (positions [i].x - worldMoveSpeed * Time.deltaTime, positions [i].y, positions [i].z);
-		}
-		trail.SetPositions (positions);*/
 	}
 
 	public void HideAllObjects(string byTag = "") {

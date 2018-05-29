@@ -10,6 +10,7 @@ public class SetActive : MonoBehaviour {
 	public Text wormText;
 
 	public Text highscoreText;
+	public GameObject purchaseCanvas;
 
 	// Use this for initialization
 	void Start () {
@@ -23,6 +24,10 @@ public class SetActive : MonoBehaviour {
     public void Activate()
     {
         gameObject.SetActive(true);
+		
+		if(PowerupBuyer.instance.HasEnoughWorms())
+			purchaseCanvas.SetActive(true);
+
 		scoreText.text = "Score: " + GameManager.instance.score;
 		wormText.text = "" + GameManager.instance.currency;
 		totalText.text = "Total score: " + GameManager.instance.totalScore;

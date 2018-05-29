@@ -50,12 +50,13 @@ public class PowerupManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKeyUp(KeyCode.S)) {
+		if(Input.GetKeyUp(KeyCode.S) && Input.GetKey(KeyCode.O)) {
 			Shake (10, player);
 			
 		}
 	}
 
+	//Called from the GUI when the user would like to trigger the powerup
 	public void TriggerPowerupGUI(string name) {
 		triggerButton.gameObject.SetActive(false);
 		switch(name) {
@@ -79,6 +80,7 @@ public class PowerupManager : MonoBehaviour {
 		}
 	}
 
+	//Called to set the parameters for the powerup
 	public void TriggerPowerup(string name, Player player) {
 		triggerButton.gameObject.SetActive(true);
 		triggerButton.onClick.RemoveAllListeners();
