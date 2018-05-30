@@ -18,6 +18,7 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		AudioManager.instance.SetCorrectVolume(this.gameObject, false);
 	}
 	
 	// Update is called once per frame
